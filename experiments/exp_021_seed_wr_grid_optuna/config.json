@@ -1,0 +1,24 @@
+{
+  "id": "exp_021_seed_wr_grid_optuna",
+  "parent": "exp_018_seed_wr_elo_grid",
+  "hypothesis": "Combine both winning palancas: Elo grid search + fresh Optuna 25 trials with SeedHistWR. Grid found best Elo, Optuna re-tunes CB for 29 features.",
+  "elo": {"grid_search": true},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 0,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true,
+    "cb_optuna_trials": 25
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

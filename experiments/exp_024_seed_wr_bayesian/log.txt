@@ -1,0 +1,89 @@
+============================================================
+EXPERIMENT: exp_024_seed_wr_bayesian
+Hypothesis: Bayesian-smoothed SeedHistWR (k=5) â€” shrink rare matchup rates toward global prior to reduce noise in low-sample matchups like 1v16
+Parent: exp_018_seed_wr_elo_grid
+============================================================
+
+[1/10] Loading Kaggle data...
+  Men: 196,823 reg + 2,585 tourney | Women: 140,825 reg + 1,717 tourney
+
+[2/10] Loading external data...
+  KenPom individual: 8810 rows
+  Barttorvik individual: 4387 rows
+
+[3/10] Elo (fixed): K=40, home=64, carry=0.65
+
+[4/10] Computing efficiency...
+  Men: (8346, 11), Women: (5965, 11)
+
+[5/10] Seeds + Massey...
+  Massey Men: (8356, 8)
+
+[6/10] Building team features...
+  Men: (13753, 29), Women: (9851, 13)
+
+[7/10] Building matchup data...
+  Adding historical seed matchup win rates (leak-free)...
+  SeedHistWR: mean=0.5038, std=0.2714
+  Training: (4302, 33), Features (29): ['BT_ADJDE_diff', 'BT_ADJOE_diff', 'BT_ADJ_T_diff', 'BT_BARTHAG_diff', 'BT_EFG_D_diff', 'BT_EFG_O_diff', 'BT_WAB_diff', 'DefEff_diff', 'Elo_diff', 'FTRate_diff']...
+
+[8/10] Reusing CatBoost params from exp_017_seed_wr_optuna
+
+[9/10] Temporal CV (Brier, last 10 seasons)...
+  2015 | n=130 | LGB=0.14653 | XGB=0.15059 | CB=0.14055
+  2016 | n=130 | LGB=0.20144 | XGB=0.19380 | CB=0.17754
+  2017 | n=130 | LGB=0.18333 | XGB=0.18596 | CB=0.16114
+  2018 | n=130 | LGB=0.19537 | XGB=0.19194 | CB=0.17289
+  2019 | n=130 | LGB=0.15418 | XGB=0.15343 | CB=0.14175
+  2021 | n=129 | LGB=0.17747 | XGB=0.18246 | CB=0.17044
+  2022 | n=134 | LGB=0.18431 | XGB=0.18427 | CB=0.16653
+  2023 | n=134 | LGB=0.20226 | XGB=0.19945 | CB=0.18443
+  2024 | n=134 | LGB=0.17698 | XGB=0.16657 | CB=0.15377
+  2025 | n=134 | LGB=0.11989 | XGB=0.11875 | CB=0.12614
+
+  LGB: 0.17418 | XGB: 0.17272 | CB: 0.15952
+  HC Brier: 0.15945 | Weights: {'lgb': 0.0, 'xgb': 0.05, 'cb': 0.95}
+
+  Top features:
+    Elo_diff                                   963
+    RecordWinPct_diff                          961
+    SeedHistWR                                 912
+    FTRate_diff                                643
+    KP_AdjDE_diff                              584
+    ORBRate_diff                               580
+    DefEff_diff                                511
+    OffEff_diff                                498
+    TORate_diff                                495
+    eFG_diff                                   478
+
+[10/10] Generating submissions...
+
+  stage1...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage1_exp_024_seed_wr_bayesian.csv | mean=0.4958, std=0.2828
+
+  stage2...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage2_exp_024_seed_wr_bayesian.csv | mean=0.4996, std=0.2500
+
+============================================================
+DONE in 474s | CV Brier: 0.15945 | Features: 29
+============================================================

@@ -1,0 +1,25 @@
+{
+  "id": "exp_044_ast_defense",
+  "parent": "exp_025_lr_blend",
+  "hypothesis": "Add A/TO ratio, StealRate, BlockRate — untapped defensive box score stats. Assists/turnovers capture ball control quality, steals/blocks capture defensive disruption. Different signal from efficiency aggregates.",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 0,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true,
+    "ast_to_features": true
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true, "lr": true,
+    "cb_optuna_trials": 0, "cb_reuse_params": "exp_017_seed_wr_optuna"
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

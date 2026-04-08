@@ -1,0 +1,90 @@
+============================================================
+EXPERIMENT: exp_011_feature_selection_22
+Hypothesis: Gentle feature selection: keep top 22 of 28 features, remove only the 6 noisiest
+Parent: exp_000_v3b_baseline
+============================================================
+
+[1/10] Loading Kaggle data...
+  Men: 196,823 reg + 2,585 tourney | Women: 140,825 reg + 1,717 tourney
+
+[2/10] Loading external data...
+  KenPom individual: 8810 rows
+  Barttorvik individual: 4387 rows
+
+[3/10] Elo (fixed): K=40, home=64, carry=0.65
+
+[4/10] Computing efficiency...
+  Men: (8346, 11), Women: (5965, 11)
+
+[5/10] Seeds + Massey...
+  Massey Men: (8356, 8)
+
+[6/10] Building team features...
+  Men: (13753, 29), Women: (9851, 13)
+
+[7/10] Building matchup data...
+
+  Feature selection: picking top 22 from 28...
+  Selected: ['Elo_diff', 'RecordWinPct_diff', 'KP_AdjDE_diff', 'FTRate_diff', 'ORBRate_diff', 'DefEff_diff', 'KP_AdjOE_diff', 'OffEff_diff', 'SeedNum_diff', 'TORate_diff', 'NetEff_diff', 'KP_AdjTempo_diff', 'eFG_diff', 'MasseyStd_diff', 'KP_AdjEM_diff', 'MasseyMin_diff', 'BT_ADJ_T_diff', 'WinPct_diff', 'BT_ADJOE_diff', 'BT_EFG_O_diff', 'MasseyMax_diff', 'BT_EFG_D_diff']
+  Training: (4302, 32), Features (22): ['Elo_diff', 'RecordWinPct_diff', 'KP_AdjDE_diff', 'FTRate_diff', 'ORBRate_diff', 'DefEff_diff', 'KP_AdjOE_diff', 'OffEff_diff', 'SeedNum_diff', 'TORate_diff']...
+
+[8/10] Reusing CatBoost params from exp_000_v3b_baseline
+
+[9/10] Temporal CV (Brier, last 10 seasons)...
+  2015 | n=130 | LGB=0.15360 | XGB=0.15202 | CB=0.14465
+  2016 | n=130 | LGB=0.18316 | XGB=0.18653 | CB=0.18219
+  2017 | n=130 | LGB=0.18077 | XGB=0.17913 | CB=0.17061
+  2018 | n=130 | LGB=0.19201 | XGB=0.19303 | CB=0.17274
+  2019 | n=130 | LGB=0.15832 | XGB=0.15830 | CB=0.14075
+  2021 | n=129 | LGB=0.17669 | XGB=0.18099 | CB=0.17344
+  2022 | n=134 | LGB=0.18986 | XGB=0.18958 | CB=0.17111
+  2023 | n=134 | LGB=0.19652 | XGB=0.19784 | CB=0.17788
+  2024 | n=134 | LGB=0.17557 | XGB=0.18017 | CB=0.15351
+  2025 | n=134 | LGB=0.12560 | XGB=0.12452 | CB=0.12868
+
+  LGB: 0.17321 | XGB: 0.17421 | CB: 0.16155
+  HC Brier: 0.16141 | Weights: {'lgb': 0.079, 'xgb': 0.0, 'cb': 0.921}
+
+  Top features:
+    Elo_diff                                  1159
+    RecordWinPct_diff                          942
+    FTRate_diff                                683
+    KP_AdjDE_diff                              647
+    DefEff_diff                                583
+    TORate_diff                                548
+    eFG_diff                                   537
+    ORBRate_diff                               532
+    OffEff_diff                                518
+    SeedNum_diff                               511
+
+[10/10] Generating submissions...
+
+  stage1...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage1_exp_011_feature_selection_22.csv | mean=0.4823, std=0.3209
+
+  stage2...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage2_exp_011_feature_selection_22.csv | mean=0.4783, std=0.2926
+
+============================================================
+DONE in 973s | CV Brier: 0.16141 | Features: 22
+============================================================

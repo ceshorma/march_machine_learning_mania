@@ -1,0 +1,1914 @@
+{
+  "best_cv_brier": 0.15534,
+  "best_experiment_id": "exp_056_gender_hc_consist",
+  "best_kaggle_lb": 0.0503,
+  "total_experiments": 89,
+  "experiments": [
+    {
+      "id": "exp_000_v3b_baseline",
+      "name": "v3b Baseline",
+      "parent_id": null,
+      "hypothesis": "Baseline: v3b with Brier scoring, Elo grid search, Optuna CatBoost, fillna(0)",
+      "status": "completed",
+      "created_at": "2026-03-14T00:00:00",
+      "elapsed_seconds": 1097,
+      "changes": [
+        "Initial baseline from existing v3b script"
+      ],
+      "cv_brier": {
+        "lgb": 0.17606,
+        "xgb": 0.17392,
+        "cb": 0.15853,
+        "ensemble_avg": 0.16569,
+        "ensemble_hc": 0.15848
+      },
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "kaggle_lb": 0.1122,
+      "n_features": 28,
+      "elo_params": {
+        "k": 40,
+        "home_adv": 64,
+        "carryover": 0.65
+      },
+      "cb_optuna_params": {
+        "learning_rate": 0.0273,
+        "depth": 5,
+        "l2_leaf_reg": 2.6971,
+        "iterations": 354,
+        "min_data_in_leaf": 30,
+        "random_strength": 0.9418,
+        "bagging_temperature": 1.3331
+      },
+      "key_findings": "CatBoost dominates ensemble (100% weight). Isotonic calibration disabled (no improvement). Elo optimal: K=40, home=64.",
+      "tags": [
+        "baseline",
+        "catboost",
+        "optuna",
+        "brier"
+      ]
+    },
+    {
+      "id": "exp_001_resumes",
+      "name": "Adding Resume features (Q1/Q2 wins, NET RPI, WAB, SOS) captures quality-of-wins ",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 848,
+      "cv_brier": 0.15912,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 39,
+      "key_findings": "Resumes (Q1/Q2 wins, NET RPI, WAB) no mejoraron. Solo cubren tournament teams (1147 rows). Info redundante con Elo/efficiency.",
+      "tags": [
+        "features",
+        "resumes",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_002_kpbt_combined",
+      "name": "KP+BT combined file (30+ features: height, experience, talent, shooting splits)",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 841,
+      "cv_brier": 0.16786,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 49,
+      "key_findings": "MUCHO PEOR. Reemplaz\u00c3\u00b3 individual KP(8810 rows)+BT(4387 rows) con combined(1147 rows tournament-only). Perdi\u00c3\u00b3 cobertura. LECCION: cobertura amplia > mas features.",
+      "tags": [
+        "features",
+        "kpbt-combined",
+        "worse"
+      ]
+    },
+    {
+      "id": "exp_003_clip_ensemble_tuning",
+      "name": "Tighter clip [0.03,0.97] + finer ensemble step (0.005) to improve Brier calibrat",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 820,
+      "cv_brier": 0.15912,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 28,
+      "key_findings": "Tighter clip [0.03,0.97] empeor\u00c3\u00b3 vs [0.02,0.98]. Finer ensemble step no cambi\u00c3\u00b3 nada (CB sigue 100%). LECCI\u00c3\u201cN: clip no es palanca significativa, CB no produce predicciones extremas.",
+      "tags": [
+        "calibration",
+        "clip",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_004_optuna_50",
+      "name": "Double Optuna trials (50 vs 25) to better explore CatBoost hyperparameter space",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 1520,
+      "cv_brier": 0.15866,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 28,
+      "key_findings": "50 trials (vs 25) encontr\u00c3\u00b3 CB Brier 0.15869 vs baseline 0.15853. Marginal, no justifica 2x runtime. LECCI\u00c3\u201cN: 25 trials ya explora suficiente para este espacio.",
+      "tags": [
+        "model",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_005_wider_clip",
+      "name": "Wider clip [0.01,0.99] to allow more extreme predictions \u00e2\u20ac\u201d Brier rewards corre",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 741,
+      "cv_brier": 0.15912,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 28,
+      "key_findings": "Wider clip [0.01,0.99] no mejora. CB=0.15918, id\u00c3\u00a9ntico a exp_003. CatBoost produce predicciones bien dentro del rango 0.02-0.98, clip es irrelevante. LECCI\u00c3\u201cN: clip tuning es un callej\u00c3\u00b3n sin salida.",
+      "tags": [
+        "calibration",
+        "clip",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_006_coach",
+      "name": "Add coach tournament features (PAKE, PASE, F4%) \u00e2\u20ac\u201d career-level data mapped via",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 859,
+      "cv_brier": 0.15912,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 32,
+      "key_findings": "Coach features (13898 rows, buena cobertura) no aportan. COACH_PAKE/PASE/F4pct con 0 importancia. Stats de carrera son est\u00c3\u00a1ticas por coach, no capturan din\u00c3\u00a1mica temporal. LECCI\u00c3\u201cN: career-level aggregates son redundantes.",
+      "tags": [
+        "features",
+        "coach",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_007_evan_miya",
+      "name": "Add EvanMiya features (kill shots, pace adjust, opponent adjust) \u00e2\u20ac\u201d different s",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 642,
+      "cv_brier": 0.15912,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 36,
+      "key_findings": "EvanMiya (816 rows, tournament-only) con 0 importancia en CatBoost. Features EM_* ignoradas completamente. LECCI\u00c3\u201cN: todo multisource/tournament-only data es callej\u00c3\u00b3n sin salida.",
+      "tags": [
+        "features",
+        "evan-miya",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_008_no_barttorvik",
+      "name": "Remove Barttorvik features (7 features overlap with KenPom/efficiency) \u00e2\u20ac\u201d less ",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 593,
+      "cv_brier": 0.15927,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.011,
+        "cb": 0.989
+      },
+      "n_features": 21,
+      "key_findings": "Sin BT: CB empeor\u00c3\u00b3 0.15932 vs 0.15918. Pero XGB mejor\u00c3\u00b3 mucho (0.17183 vs 0.17373) y entr\u00c3\u00b3 al ensemble con 1.1%. BT ayuda a CB pero perjudica a XGB. LECCI\u00c3\u201cN: Barttorvik es net positive para CB, mantener.",
+      "tags": [
+        "features",
+        "ablation",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_009_feature_selection_15",
+      "name": "Feature selection: keep only top 15 features by LGB importance to reduce overfit",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 591,
+      "cv_brier": 0.16125,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 15,
+      "key_findings": "Top 15 features EMPEOR\u00c3\u201c mucho (0.16125 vs 0.15918). Dropped WinPct, BT_*, MasseyMedian, is_mens. Todas contribu\u00c3\u00adan. LECCI\u00c3\u201cN: modelo necesita todas las 28 features.",
+      "tags": [
+        "feature-selection",
+        "structural",
+        "worse"
+      ]
+    },
+    {
+      "id": "exp_010_separate_mw",
+      "name": "Train separate models for Men and Women \u00e2\u20ac\u201d Women's basketball is more seed-driv",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 1286,
+      "cv_brier": 0.16297,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.098,
+        "cb": 0.902
+      },
+      "n_features": 28,
+      "key_findings": "Separate M/W EMPEOR\u00c3\u201c (0.16297). Demasiado pocas muestras por g\u00c3\u00a9nero (~60M/~40W por fold). XGB entr\u00c3\u00b3 con 9.8% por primera vez. LECCI\u00c3\u201cN: datos insuficientes para modelos separados M/W con 27 features.",
+      "tags": [
+        "separate-mw",
+        "structural",
+        "worse"
+      ]
+    },
+    {
+      "id": "exp_011_feature_selection_22",
+      "name": "Gentle feature selection: keep top 22 of 28 features, remove only the 6 noisiest",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 973,
+      "cv_brier": 0.16141,
+      "hc_weights": {
+        "lgb": 0.079,
+        "xgb": 0.0,
+        "cb": 0.921
+      },
+      "n_features": 22,
+      "key_findings": "Top 22 features tambi\u00c3\u00a9n empeor\u00c3\u00b3 (0.16141). Dropped is_mens, MasseyMean/Median, BT_ADJDE/BARTHAG/WAB. is_mens es cr\u00c3\u00adtico. LGB entr\u00c3\u00b3 con 7.9%. LECCI\u00c3\u201cN: feature selection con LGB importance global tiene data leakage y pierde features cr\u00c3\u00adticas como is_mens.",
+      "tags": [
+        "feature-selection",
+        "structural",
+        "worse"
+      ]
+    },
+    {
+      "id": "exp_012_season_weighting",
+      "name": "Season weighting with decay=0.9 \u00e2\u20ac\u201d recent seasons more predictive of current to",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 1194,
+      "cv_brier": 0.16306,
+      "hc_weights": {
+        "lgb": 0.203,
+        "xgb": 0.063,
+        "cb": 0.733
+      },
+      "n_features": 28,
+      "key_findings": "Season weighting decay=0.9 EMPEOR\u00c3\u201c (0.16306 vs 0.15848). PERO: por primera vez LGB(20.3%)+XGB(6.3%) entraron al ensemble significativamente, CB baj\u00c3\u00b3 a 73.3%. El decay penaliza seasons antiguos (weight range 0.015-1.0), reduciendo datos efectivos. LECCI\u00c3\u201cN: season weighting da\u00c3\u00b1a CB pero diversifica ensemble; podr\u00c3\u00ada funcionar con decay m\u00c3\u00a1s suave (0.95-0.98).",
+      "tags": [
+        "season-weighting",
+        "structural",
+        "worse"
+      ]
+    },
+    {
+      "id": "exp_013_fresh_optuna",
+      "name": "Fresh Optuna 25 trials + Elo grid search \u00e2\u20ac\u201d re-optimize all hyperparams from sc",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 1097,
+      "cv_brier": 0.15911,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.005,
+        "cb": 0.995
+      },
+      "n_features": 28,
+      "key_findings": "Fresh Optuna 25 trials encontr\u00c3\u00b3 CB=0.15911 vs baseline 0.15853. Elo grid probablemente mismos params (K=40,home=64,carry=0.65). XGB entr\u00c3\u00b3 m\u00c3\u00adnimamente (0.5%). Re-optimizaci\u00c3\u00b3n no mejora \u00e2\u20ac\u201d el baseline ya est\u00c3\u00a1 bien tuneado. LECCI\u00c3\u201cN: hyperparams son estables, no hay ganancia f\u00c3\u00a1cil re-tuneando.",
+      "tags": [
+        "optuna",
+        "elo-grid",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_014_season_weight_gentle",
+      "name": "Gentle season weighting decay=0.97 \u00e2\u20ac\u201d minimal downweight of old seasons, keeps ",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 498,
+      "cv_brier": 0.15977,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.004,
+        "cb": 0.996
+      },
+      "n_features": 28,
+      "key_findings": "Gentle decay=0.97 (weights 0.30-1.0) mejor que 0.9 (0.15977 vs 0.16306) pero no supera baseline (0.15848). CB vuelve a 99.6%. Tendencia clara: decay\u00e2\u2020\u20190=baseline=mejor, confirma que season weighting NO ayuda. El modelo ya captura temporalidad via Elo carryover + seasonal features. LECCI\u00c3\u201cN: season weighting es callej\u00c3\u00b3n sin salida.",
+      "tags": [
+        "season-weighting",
+        "structural",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_015_momentum_10",
+      "name": "Add momentum features (last 10 games) \u00e2\u20ac\u201d recent form + delta vs season avg. Ful",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 524,
+      "cv_brier": 0.16248,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 36,
+      "key_findings": "Momentum (last 10 games) empeor\u00c3\u00b3 (0.16248 vs 0.15848). MomDelta features ranked 5th/6th/10th in importance \u00e2\u20ac\u201d tienen se\u00c3\u00b1al pero a\u00c3\u00b1aden ruido con 36 features + CB params tuneados para 28. Full coverage OK (8346+5965 rows). LECCI\u00c3\u201cN: momentum tiene se\u00c3\u00b1al pero el CB baseline no se beneficia, posiblemente necesita re-tuning con las nuevas features.",
+      "tags": [
+        "features",
+        "momentum",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_016_seed_hist_wr",
+      "name": "Add historical seed matchup win rate \u00e2\u20ac\u201d P(lower seed wins | seed_a vs seed_b) f",
+      "parent_id": "exp_000_v3b_baseline",
+      "status": "completed",
+      "elapsed_seconds": 501,
+      "cv_brier": 0.15921,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 29,
+      "key_findings": "SeedHistWR ranked 3rd in feature importance (866)! CB=0.15924 vs baseline 0.15853 \u00e2\u20ac\u201d muy cerca. Feature tiene se\u00c3\u00b1al fuerte pero CB params tuneados para 28 features. LECCI\u00c3\u201cN: SeedHistWR es el feature m\u00c3\u00a1s prometedor encontrado \u00e2\u20ac\u201d re-tunear CB con Optuna podr\u00c3\u00ada cerrar el gap.",
+      "tags": [
+        "features",
+        "seed-encoding",
+        "promising"
+      ]
+    },
+    {
+      "id": "exp_017_seed_wr_optuna",
+      "name": "SeedHistWR (3rd most important feature) + fresh Optuna 25 trials \u00e2\u20ac\u201d re-optimize",
+      "parent_id": "exp_016_seed_hist_wr",
+      "status": "completed",
+      "elapsed_seconds": 892,
+      "cv_brier": 0.15817,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 29,
+      "key_findings": "NUEVO BEST! 0.15817 vs 0.15848 (-0.00031). SeedHistWR + Optuna re-tuning = primera mejora en 17 experimentos. SeedHistWR ranked 3rd (866 importance). Optuna encontr\u00c3\u00b3 Brier 0.15819 en tuning. CB sigue dominando 100%. LECCI\u00c3\u201cN: target encoding de seeds + re-optimizaci\u00c3\u00b3n funciona \u00e2\u20ac\u201d la se\u00c3\u00b1al hist\u00c3\u00b3rica de matchups de seeds es valiosa.",
+      "tags": [
+        "features",
+        "seed-encoding",
+        "optuna",
+        "new-best"
+      ]
+    },
+    {
+      "id": "exp_018_seed_wr_elo_grid",
+      "name": "SeedHistWR + Elo grid search \u00e2\u20ac\u201d re-optimize Elo params (K, home_adv, carryover)",
+      "parent_id": "exp_017_seed_wr_optuna",
+      "status": "completed",
+      "elapsed_seconds": 681,
+      "cv_brier": 0.15805,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 29,
+      "key_findings": "NUEVO BEST! 0.15805 vs 0.15817 (-0.00012). Elo grid confirm\u00c3\u00b3 mismos params (K=40, home=64, carry=0.65) pero CB mejor\u00c3\u00b3 0.15806 vs 0.15819. La diferencia viene de evaluation path (grid search vs fixed). 2 mejoras consecutivas en el path SeedHistWR. LECCI\u00c3\u201cN: Elo grid search con SeedHistWR aporta marginal pero consistente mejora.",
+      "tags": [
+        "elo-grid",
+        "seed-encoding",
+        "new-best"
+      ]
+    },
+    {
+      "id": "exp_019_seed_wr_conf",
+      "name": "SeedHistWR + Conference strength (ConfEloMean, ConfEloStd, ConfRank, IsPowerConf",
+      "parent_id": "exp_018_seed_wr_elo_grid",
+      "status": "completed",
+      "elapsed_seconds": 534,
+      "cv_brier": 0.1606,
+      "hc_weights": {
+        "lgb": 0.021,
+        "xgb": 0.0,
+        "cb": 0.979
+      },
+      "n_features": 33,
+      "key_findings": "Conference strength empeor\u00c3\u00b3 (0.16060 vs 0.15805). ConfEloStd ranked #1 (1027!), ConfEloMean #4 (780) \u00e2\u20ac\u201d features muy fuertes en importancia pero da\u00c3\u00b1an predicci\u00c3\u00b3n con CB params tuneados para 29 features. Patr\u00c3\u00b3n: nuevas features high-importance siempre necesitan re-tuning (como SeedHistWR exp_016\u00e2\u2020\u2019017). LGB entr\u00c3\u00b3 2.1%. LECCI\u00c3\u201cN: conf features tienen se\u00c3\u00b1al, podr\u00c3\u00adan funcionar con Optuna re-tuning pero no es prioritario ya que el patr\u00c3\u00b3n es consistente.",
+      "tags": [
+        "features",
+        "conference",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_020_seed_wr_conf_optuna",
+      "name": "SeedHistWR + Conference strength + fresh Optuna 25 \u00e2\u20ac\u201d re-optimize CB for 33 fea",
+      "parent_id": "exp_019_seed_wr_conf",
+      "status": "completed",
+      "elapsed_seconds": 885,
+      "cv_brier": 0.16078,
+      "hc_weights": {
+        "lgb": 0.061,
+        "xgb": 0.0,
+        "cb": 0.939
+      },
+      "n_features": 33,
+      "key_findings": "Conf + Optuna TAMPOCO mejor\u00c3\u00b3 (0.16078 vs 0.15805). Optuna encontr\u00c3\u00b3 0.16086 \u00e2\u20ac\u201d peor que reused params (0.16060). Conference features genuinamente da\u00c3\u00b1an: high importance pero info redundante con Elo (ConfEloMean \u00e2\u2030\u02c6 promedio Elo de conf, ya capturado). LGB entr\u00c3\u00b3 6.1%. LECCI\u00c3\u201cN: conference features son callej\u00c3\u00b3n sin salida \u00e2\u20ac\u201d la se\u00c3\u00b1al es redundante con Elo, no aditiva.",
+      "tags": [
+        "features",
+        "conference",
+        "optuna",
+        "worse"
+      ]
+    },
+    {
+      "id": "exp_021_seed_wr_grid_optuna",
+      "name": "Combine both winning palancas: Elo grid search + fresh Optuna 25 trials with See",
+      "parent_id": "exp_018_seed_wr_elo_grid",
+      "status": "completed",
+      "elapsed_seconds": 1092,
+      "cv_brier": 0.1589,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 1.0
+      },
+      "n_features": 29,
+      "key_findings": "Grid + Optuna combo empeor\u00c3\u00b3 (0.15890 vs 0.15805). Optuna es estoc\u00c3\u00a1stico \u00e2\u20ac\u201d encontr\u00c3\u00b3 peores params (0.15890) que exp_017 (0.15819). Elo grid confirma mismos params. LECCI\u00c3\u201cN: Optuna no es determinista, re-runs pueden encontrar peores \u00c3\u00b3ptimos. exp_018 (reused exp_017 params + grid) sigue siendo el best approach.",
+      "tags": [
+        "optuna",
+        "elo-grid",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_022_interactions",
+      "name": "Add interaction features (Elo*SeedHistWR, Elo*SeedNum, SeedHist*Gender) \u00e2\u20ac\u201d capt",
+      "parent_id": "exp_018_seed_wr_elo_grid",
+      "status": "completed",
+      "elapsed_seconds": 507,
+      "cv_brier": 0.15978,
+      "hc_weights": {
+        "lgb": 0.064,
+        "xgb": 0.0,
+        "cb": 0.936
+      },
+      "n_features": 32,
+      "key_findings": "Interactions empeor\u00c3\u00b3 (0.15978 vs 0.15805). Elo_x_Seed ranked #2 (691), Elo_x_SeedHist #5 (595) \u00e2\u20ac\u201d alta importancia pero redundante. CatBoost ya modela interacciones internamente (tree splits). LGB entr\u00c3\u00b3 6.4%. LECCI\u00c3\u201cN: explicit interactions son redundantes para tree-based models, CatBoost las captura autom\u00c3\u00a1ticamente.",
+      "tags": [
+        "features",
+        "interactions",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_023_seed_wr_gender",
+      "name": "Add gender-specific SeedHistWR (separate M/W historical seed matchup rates) \u00e2\u20ac\u201d ",
+      "parent_id": "exp_018_seed_wr_elo_grid",
+      "status": "completed",
+      "elapsed_seconds": 526,
+      "cv_brier": 0.15922,
+      "hc_weights": {
+        "lgb": 0.064,
+        "xgb": 0.0,
+        "cb": 0.936
+      },
+      "n_features": 31,
+      "key_findings": "Gender-specific SeedHistWR empeor\u00c3\u00b3 (0.15922 vs 0.15805). SeedHistWR_M/W no entraron en top 10 features \u00e2\u20ac\u201d el SeedHistWR global (ranked 3rd) ya captura la se\u00c3\u00b1al. M mean=0.5063 vs W mean=0.4968 muestra diferencias reales M/W pero el modelo no se beneficia de separarlas. LECCI\u00c3\u201cN: SeedHistWR global es suficiente, la separaci\u00c3\u00b3n M/W a\u00c3\u00b1ade ruido con poco dato por matchup.",
+      "tags": [
+        "features",
+        "seed-encoding",
+        "gender-specific",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_024_seed_wr_bayesian",
+      "name": "Bayesian-smoothed SeedHistWR (k=5) \u00e2\u20ac\u201d shrink rare matchup rates toward global p",
+      "parent_id": "exp_018_seed_wr_elo_grid",
+      "status": "completed",
+      "elapsed_seconds": 474,
+      "cv_brier": 0.15945,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.05,
+        "cb": 0.95
+      },
+      "n_features": 29,
+      "key_findings": "Bayesian smoothing k=5 empeor\u00c3\u00b3 (0.15945 vs 0.15805). Smoothing comprimi\u00c3\u00b3 SeedHistWR variance (std 0.2714 vs 0.2824 raw), debilitando la se\u00c3\u00b1al. CB empeor\u00c3\u00b3 0.15952 vs 0.15806. XGB entr\u00c3\u00b3 con 5% por primera vez en el path SeedHistWR. LECCI\u00c3\u201cN: SeedHistWR raw rates son mejores \u00e2\u20ac\u201d los matchups comunes tienen suficiente muestra, y los raros (1v16) son pocos datos en el dataset anyway.",
+      "tags": [
+        "features",
+        "seed-encoding",
+        "bayesian",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_025_lr_blend",
+      "name": "Add LogisticRegression as 4th model in ensemble \u00e2\u20ac\u201d LR provides well-calibrated ",
+      "parent_id": "exp_018_seed_wr_elo_grid",
+      "status": "completed",
+      "elapsed_seconds": 460,
+      "cv_brier": 0.15592,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.511,
+        "lr": 0.489
+      },
+      "n_features": 29,
+      "key_findings": "NUEVO BEST! 0.15592 vs 0.15805 (-0.00213). MAYOR mejora de todos los 26 experimentos. LR=0.15839 casi iguala CB=0.15815 individualmente, pero la diversidad entre ambos produce HC ensemble 0.15592. Weights: CB 51.1%, LR 48.9%, LGB/XGB 0%. LR es inherentemente bien calibrada (Brier = calibration + refinement). LECCI\u00c3\u201cN: model diversity >>> model strength para Brier score. LR como ancla calibrada + CB como modelo fuerte = combo potente.",
+      "tags": [
+        "models",
+        "lr-blend",
+        "ensemble",
+        "new-best"
+      ]
+    },
+    {
+      "id": "exp_026_stacking",
+      "name": "Replace hill-climbing with Ridge stacking meta-learner on OOF predictions of LGB",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 464,
+      "cv_brier": 0.16037,
+      "hc_weights": {
+        "lgb": 0.0314,
+        "xgb": -0.0663,
+        "cb": 0.5577,
+        "lr": 0.4981,
+        "_intercept": -0.0255
+      },
+      "n_features": 29,
+      "key_findings": "Stacking empeor\u00c3\u00b3 (0.16037 vs 0.15592 HC). Ridge encontr\u00c3\u00b3 coefs similares (CB 0.558, LR 0.498) pero intercept=-0.026 y XGB negativo (-0.066) da\u00c3\u00b1an. HC ensemble greedy es mejor porque constrains weights a ser no-negativos y sumar 1. LECCI\u00c3\u201cN: hill-climbing > Ridge stacking para este ensemble. La simplicidad del HC (no-negative, sums-to-1 constraint) act\u00c3\u00baa como regularizaci\u00c3\u00b3n natural.",
+      "tags": [
+        "ensemble",
+        "stacking",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_027_lr_C01",
+      "name": "LR with stronger regularization C=0.1 (vs default C=1.0) \u00e2\u20ac\u201d more regularized LR",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 453,
+      "cv_brier": 0.15634,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.516,
+        "lr": 0.484
+      },
+      "n_features": 29,
+      "key_findings": "LR C=0.1 empeor\u00c3\u00b3 marginalmente (0.15634 vs 0.15592). LR individual 0.15837 ~= C=1.0 (0.15839). Weights casi iguales: CB 51.6% LR 48.4%. LR es insensible a C en este rango \u00e2\u20ac\u201d 29 features bien escaladas. LECCI\u00c3\u201cN: LR regularization no es palanca significativa, C=1.0 es bueno.",
+      "tags": [
+        "models",
+        "lr-tuning",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_028_lr_optuna_cb",
+      "name": "Re-tune CB with Optuna 25 trials while LR is in ensemble \u00e2\u20ac\u201d CB params were opti",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 781,
+      "cv_brier": 0.1559,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.507,
+        "lr": 0.493
+      },
+      "n_features": 29,
+      "key_findings": "NUEVO BEST marginal! 0.15590 vs 0.15592 (-0.00002). Optuna encontr\u00c3\u00b3 CB=0.15829 (peor que reused 0.15815) pero ensemble mejor\u00c3\u00b3 microsc\u00c3\u00b3picamente. Weights: CB 50.7% LR 49.3% (m\u00c3\u00a1s equilibrado). LECCI\u00c3\u201cN: re-tuning CB con LR en ensemble no cambia mucho \u00e2\u20ac\u201d la diversidad CB+LR ya est\u00c3\u00a1 bien capturada con params originales.",
+      "tags": [
+        "models",
+        "optuna",
+        "lr-blend",
+        "new-best"
+      ]
+    },
+    {
+      "id": "exp_029_lr_elo_grid",
+      "name": "LR blend + Elo grid search \u00e2\u20ac\u201d with LR in ensemble, optimal Elo params may diffe",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 652,
+      "cv_brier": 0.15592,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.511,
+        "lr": 0.489
+      },
+      "n_features": 29,
+      "key_findings": "Elo grid con LR = id\u00c3\u00a9ntico (0.15592). Grid confirm\u00c3\u00b3 mismos params K=40, home=64, carry=0.65. CB=0.15815, LR=0.15839. HC weights id\u00c3\u00a9nticos a exp_025. LECCI\u00c3\u201cN: Elo params son robustos e independientes del ensemble method.",
+      "tags": [
+        "elo-grid",
+        "lr-blend",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_030_cb_rmse",
+      "name": "CatBoost with RMSE loss (regression on 0/1) instead of Logloss \u00e2\u20ac\u201d directly opti",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 454,
+      "cv_brier": 0.15644,
+      "hc_weights": {
+        "lgb": 0.024,
+        "xgb": 0.0,
+        "cb": 0.425,
+        "lr": 0.551
+      },
+      "n_features": 29,
+      "key_findings": "CB RMSE empeor\u00c3\u00b3 (0.15644 vs 0.15590). CB individual 0.15940 vs Logloss 0.15815 \u00e2\u20ac\u201d Logloss es mejor para CB incluso con Brier metric. PERO: ensemble se diversific\u00c3\u00b3: LR subi\u00c3\u00b3 a 55.1%, CB baj\u00c3\u00b3 a 42.5%, LGB entr\u00c3\u00b3 con 2.4%. LECCI\u00c3\u201cN: Logloss produce mejores probabilidades que RMSE para CatBoost en binario. La sigmoid link function de Logloss da mejor calibraci\u00c3\u00b3n que la salida lineal de RMSE.",
+      "tags": [
+        "models",
+        "cb-regression",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_031_ridge_blend",
+      "name": "Add Ridge regression as 5th model \u00e2\u20ac\u201d L2-regularized linear regression on binary",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 455,
+      "cv_brier": 0.15592,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.511,
+        "lr": 0.489,
+        "ridge": 0.0
+      },
+      "n_features": 29,
+      "key_findings": "Ridge got 0% HC weight \u00e2\u20ac\u201d identical to exp_025 (0.15592). Ridge individual 0.16079 vs LR 0.15839. Ridge and LR too correlated (both linear models on same features). LECCI\u00c3\u201cN: Ridge doesn't add diversity beyond LR in this feature space.",
+      "tags": [
+        "models",
+        "ridge",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_032_elasticnet_blend",
+      "name": "Add ElasticNet (SGD with L1+L2) as 5th model \u00e2\u20ac\u201d L1 regularization zeros out fea",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 458,
+      "cv_brier": 0.15592,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.512,
+        "lr": 0.488,
+        "enet": 0.0
+      },
+      "n_features": 29,
+      "key_findings": "ElasticNet got 0% HC weight. Individual 0.20312 \u00e2\u20ac\u201d far worse than LR (0.15839). SGD optimizer with elasticnet penalty unstable on small data (wildly varying per-season: 0.17-0.33). LECCI\u00c3\u201cN: SGDClassifier inadequate for this dataset size. All linear model variants (LR, Ridge, ElasticNet) fail to add diversity beyond LR.",
+      "tags": [
+        "models",
+        "elasticnet",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_033_cb_depth3",
+      "name": "CatBoost with depth=3 instead of 5 \u00e2\u20ac\u201d shallower trees produce simpler, more reg",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 479,
+      "cv_brier": 0.15673,
+      "hc_weights": {
+        "lgb": 0.049,
+        "xgb": 0.0,
+        "cb": 0.383,
+        "lr": 0.569
+      },
+      "n_features": 29,
+      "key_findings": "CB depth=3 worse (0.15673 vs 0.15590). CB individual 0.15974 vs depth=5 0.15815. BUT ensemble diversified: LR rose to 56.9%, CB dropped to 38.3%, LGB entered at 4.9% for first time in LR path. Shallower CB = more regularized but weaker, net negative. LECCI\u00c3\u201cN: depth=5 is optimal for CB, shallower trees don't add enough diversity to compensate for lost accuracy.",
+      "tags": [
+        "models",
+        "cb-depth",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_034_momentum_lr",
+      "name": "Add momentum features (last 10 games) with LR in ensemble. Momentum had signal i",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 464,
+      "cv_brier": 0.15837,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.491,
+        "lr": 0.509
+      },
+      "n_features": 37,
+      "key_findings": "Momentum + LR worse (0.15837 vs 0.15590). Both models degraded: CB 0.16101 vs 0.15815, LR 0.16084 vs 0.15839. MomDelta_Off ranked 6th, MomDelta_Win 7th \u00e2\u20ac\u201d signal exists but adds noise with 37 features (vs 29). CB params tuned for 29 features. LECCI\u00c3\u201cN: Momentum confirmed as noise for both CB and LR. The 8 extra features dilute signal.",
+      "tags": [
+        "features",
+        "momentum",
+        "lr-blend",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_035_extratrees",
+      "name": "Add ExtraTrees as 5th model \u00e2\u20ac\u201d bagging-based ensemble, fundamentally different ",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 415,
+      "cv_brier": 0.15592,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.511,
+        "lr": 0.489,
+        "et": 0.0
+      },
+      "n_features": 29,
+      "key_findings": "ExtraTrees got 0% HC weight. Individual 0.16301 \u00e2\u20ac\u201d worse than CB (0.15815) and LR (0.15839). Despite fundamentally different algorithm (bagging + random splits), predictions too correlated with CB to add diversity. LECCI\u00c3\u201cN: Tree-based models share too much prediction structure to add diversity beyond CB+LR.",
+      "tags": [
+        "models",
+        "extratrees",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_036_wider_elo",
+      "name": "Wider Elo grid search \u00e2\u20ac\u201d current optimal K=40 may be local optimum. Expand rang",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 1233,
+      "cv_brier": 0.15623,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.487,
+        "lr": 0.513
+      },
+      "n_features": 29,
+      "key_findings": "Wider Elo grid (150 combos) found K=48, home=32, carry=0.65 \u00e2\u20ac\u201d different from standard K=40, home=64. But worse (0.15623 vs 0.15590). Lower home_adv weakened Elo signal. Elo importance rose to #1 (1001 vs 970) but CB individual 0.15878 vs 0.15815. LECCI\u00c3\u201cN: K=40, home=64, carry=0.65 confirmed as global optimum across wider range.",
+      "tags": [
+        "elo-grid",
+        "wider-range",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_037_knn",
+      "name": "Add KNN (k=50, distance-weighted) as 5th model \u00e2\u20ac\u201d non-parametric, instance-base",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 452,
+      "cv_brier": 0.15592,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.513,
+        "lr": 0.487,
+        "knn": 0.0
+      },
+      "n_features": 29,
+      "key_findings": "KNN got 0% HC weight. Individual 0.17053 \u00e2\u20ac\u201d worse than CB (0.15815) and LR (0.15839). High variance across seasons (0.14352-0.20152). Non-parametric approach doesn't help with ~4300 training samples and 29 features. LECCI\u00c3\u201cN: KNN too noisy for this dataset size. All model types tried (boosting, linear, bagging, non-parametric) fail to improve CB+LR blend.",
+      "tags": [
+        "models",
+        "knn",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_038_mlp",
+      "name": "Add MLP neural network (64-32 hidden layers) as 5th model \u00e2\u20ac\u201d completely differe",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 449,
+      "cv_brier": 0.15592,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.513,
+        "lr": 0.487,
+        "mlp": 0.0
+      },
+      "n_features": 29,
+      "key_findings": "MLP got 0% HC weight. Individual 0.17029 \u00e2\u20ac\u201d worse than CB (0.15815) and LR (0.15839). High variance (0.12876 in 2025 vs 0.20719 in 2021). Neural network with 64-32 architecture overfits on small data despite early stopping. LECCI\u00c3\u201cN: MLP doesn't add diversity. 9th model type tested, all get 0% weight except CB and LR.",
+      "tags": [
+        "models",
+        "mlp",
+        "neural-network",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_039_momentum_optuna",
+      "name": "Momentum features (last 10 games) + fresh Optuna 25 trials to retune CB for 37 f",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 746,
+      "cv_brier": 0.15799,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.529,
+        "lr": 0.471
+      },
+      "n_features": 37,
+      "key_findings": "Momentum + Optuna retune: 0.15799 (better than exp_034's 0.15837 without retune but still worse than 0.15590). Optuna found CB=0.16023 (vs reused params 0.16101 in exp_034). MomDelta ranked 6th/7th. Retuning helped but momentum features still net negative. LECCI\u00c3\u201cN: Even with retuned CB params, momentum adds noise. The signal is weak relative to the 8 extra features' noise.",
+      "tags": [
+        "features",
+        "momentum",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_040_cb_depth7",
+      "name": "CatBoost depth=7 instead of 5 \u00e2\u20ac\u201d deeper trees capture more complex interactions",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 456,
+      "cv_brier": 0.15646,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.447,
+        "lr": 0.553
+      },
+      "n_features": 29,
+      "key_findings": "CB depth=7 worse (0.15646 vs 0.15590). CB individual 0.15945 vs depth=5 0.15815 \u00e2\u20ac\u201d deeper trees overfit on ~4300 samples. LR rose to 55.3%, CB dropped to 44.7%. Pattern: depth=3 (0.15974), depth=5 (0.15815), depth=7 (0.15945) \u00e2\u20ac\u201d depth=5 is optimal. LECCI\u00c3\u201cN: CB depth=5 is the sweet spot. Both shallower and deeper hurt.",
+      "tags": [
+        "models",
+        "cb-depth",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_041_consistency",
+      "name": "Add performance consistency features (OffEff_Std, DefEff_Std, Margin_Std) \u00e2\u20ac\u201d va",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 469,
+      "cv_brier": 0.15662,
+      "hc_weights": {
+        "lgb": 0.03,
+        "xgb": 0.07,
+        "cb": 0.39,
+        "lr": 0.51
+      },
+      "n_features": 32,
+      "key_findings": "Consistency features ranked 6th/7th/8th in importance (DefEff_Std=542, Margin_Std=505, OffEff_Std=503) \u00e2\u20ac\u201d very strong signal! BUT CB params tuned for 29 features hurt with 32. LGB (3%) + XGB (7%) entered ensemble for first time. FOLLOWS SEEDHISTWR PATTERN: high importance + needs retune. Exp_042 should retune with Optuna.",
+      "tags": [
+        "features",
+        "consistency",
+        "variance",
+        "promising"
+      ]
+    },
+    {
+      "id": "exp_042_consistency_optuna",
+      "name": "Consistency features (ranked 6th/7th/8th) + fresh Optuna 25 trials to retune CB ",
+      "parent_id": "exp_041_consistency",
+      "status": "completed",
+      "elapsed_seconds": 721,
+      "cv_brier": 0.15656,
+      "hc_weights": {
+        "lgb": 0.02,
+        "xgb": 0.04,
+        "cb": 0.43,
+        "lr": 0.51
+      },
+      "n_features": 32,
+      "key_findings": "Optuna retune helped marginally (0.15656 vs 0.15662) but still worse than 0.15590. CB improved 0.15910 vs reused 0.15918 but ensemble gap persists. LGB+XGB still in ensemble (6% combined). Despite high importance (6-8th), consistency features add noise that outweighs signal. LECCI\u00c3\u201cN: High importance != improvement persists. Variance features may correlate with existing DefEff/OffEff means.",
+      "tags": [
+        "features",
+        "consistency",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_043_close_games",
+      "name": "Add close game performance features (CloseGameWR, CloseGameN) \u00e2\u20ac\u201d tournament gam",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 426,
+      "cv_brier": 0.15675,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.464,
+        "lr": 0.536
+      },
+      "n_features": 31,
+      "key_findings": "Close game features worse (0.15675 vs 0.15590). CloseGameWR ranked 10th (452) \u00e2\u20ac\u201d moderate signal. CloseGameN ranked low. CB 0.15948 (worse than 0.15815), LR 0.15884 (slightly better than 0.15839). Not strong enough to warrant retune. LECCI\u00c3\u201cN: Close game win rate has some signal but is partially captured by WinPct and RecordWinPct already.",
+      "tags": [
+        "features",
+        "close-games",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_044_ast_defense",
+      "name": "Add A/TO ratio, StealRate, BlockRate \u00e2\u20ac\u201d untapped defensive box score stats. Ass",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 485,
+      "cv_brier": 0.15655,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.021,
+        "cb": 0.366,
+        "lr": 0.613
+      },
+      "n_features": 32,
+      "key_findings": "A/TO+Defense ranked 7th/8th/9th (AstToTO=467, BlockRate=458, StealRate=456). LR best-ever 0.15807 (vs usual 0.15839). LR weight 61.3% \u00e2\u20ac\u201d highest ever. XGB entered 2.1%. CB degraded 0.16030 vs 0.15815. Overall 0.15655. LECCI\u00c3\u201cN: Defensive stats boost LR significantly but hurt CB with untuned params.",
+      "tags": [
+        "features",
+        "defense",
+        "ast-to",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_045_conf_tourney",
+      "name": "Add conference tournament features (ConfTourneyWR, IsConfTourneyChamp) \u00e2\u20ac\u201d uniqu",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 447,
+      "cv_brier": 0.15663,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.477,
+        "lr": 0.523
+      },
+      "n_features": 31,
+      "key_findings": "Conf tourney features worse (0.15663 vs 0.15590). ConfTourneyWR and IsConfTourneyChamp didn't make top 10 features \u00e2\u20ac\u201d signal already captured by RecordWinPct and Elo. CB 0.15932 (worse), LR 0.15887 (worse). LECCI\u00c3\u201cN: Conference tournament performance is redundant with existing features.",
+      "tags": [
+        "features",
+        "conf-tourney",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_046_neutral_court",
+      "name": "Add neutral court features (NeutralWR, HomeCourtDep) \u00e2\u20ac\u201d all tournament games ar",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 432,
+      "cv_brier": 0.15671,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.045,
+        "cb": 0.4,
+        "lr": 0.555
+      },
+      "n_features": 31,
+      "key_findings": "HomeCourtDep ranked 4th (579) \u00e2\u20ac\u201d highest single new feature importance found! NeutralWR didn't rank. XGB entered 4.5%. CB 0.15978, LR 0.15865. Overall 0.15671. Despite strong HomeCourtDep signal, CB params untuned for 31 features. LECCI\u00c3\u201cN: HomeCourtDep has strong signal, worth retune attempt.",
+      "tags": [
+        "features",
+        "neutral-court",
+        "promising"
+      ]
+    },
+    {
+      "id": "exp_047_homecourt_optuna",
+      "name": "HomeCourtDep (ranked 4th, imp=579) + NeutralWR + Optuna retune 25 trials. HomeCo",
+      "parent_id": "exp_046_neutral_court",
+      "status": "completed",
+      "elapsed_seconds": 818,
+      "cv_brier": 0.1564,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.025,
+        "cb": 0.462,
+        "lr": 0.513
+      },
+      "n_features": 31,
+      "key_findings": "HomeCourtDep + Optuna retune: 0.15640 (better than 0.15671 no-retune, but worse than 0.15590). CB improved 0.15903 vs 0.15978, XGB 2.5%. HomeCourtDep still ranked 4th. Retune helped but +2 features still net negative. LECCI\u00c3\u201cN: Even strongest novel feature (ranked 4th) can't beat 29-feature optimum after 47 experiments.",
+      "tags": [
+        "features",
+        "neutral-court",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_048_hcd_defstd_optuna",
+      "name": "Combine 2 strongest novel features: HomeCourtDep (ranked 4th) + consistency (Def",
+      "parent_id": "exp_025_lr_blend",
+      "status": "completed",
+      "elapsed_seconds": 742,
+      "cv_brier": 0.15605,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.546,
+        "lr": 0.454
+      },
+      "n_features": 34,
+      "key_findings": "CLOSEST TO BEST! 0.15605 vs 0.15590 (only +0.00015). Best novel feature combo: HomeCourtDep(8th)+DefEff_Std(5th)+OffEff_Std(6th)+Margin_Std(10th)+NeutralWR. CB best-ever with novel features 0.15831. CB 54.6%, LR 45.4%. Optuna found good params for 34 features. LECCI\u00c3\u201cN: Combining strongest novel features + retune gets very close but +5 features still net slightly negative.",
+      "tags": [
+        "features",
+        "combo",
+        "consistency",
+        "neutral-court",
+        "optuna",
+        "very-close"
+      ]
+    },
+    {
+      "id": "exp_049_ato_optuna",
+      "name": "A/TO + Defense features (AstToTO 7th, BlockRate 8th, StealRate 9th) + Optuna ret",
+      "parent_id": "exp_044_ast_defense",
+      "status": "completed",
+      "elapsed_seconds": 921,
+      "cv_brier": 0.15618,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.422,
+        "lr": 0.578
+      },
+      "n_features": 32,
+      "key_findings": "A/TO + Optuna: 0.15618 (better than 0.15655 no-retune, worse than 0.15590). CB improved 0.15981 vs 0.16030, LR still best-ever 0.15807. LR weight 57.8%. AstToTO/BlockRate/StealRate ranked 7-9th. Retune helped but 3 extra features still net negative vs 29-feature best. LECCI\u00c3\u201cN: A/TO features boost LR but can't compensate for CB degradation.",
+      "tags": [
+        "features",
+        "defense",
+        "ast-to",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_050_all_novel_optuna",
+      "name": "Combine ALL 3 strongest novel feature groups: HomeCourtDep+NeutralWR + Consisten",
+      "parent_id": "exp_048_hcd_defstd_optuna",
+      "status": "completed",
+      "elapsed_seconds": 935,
+      "cv_brier": 0.15605,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.536,
+        "lr": 0.464
+      },
+      "n_features": 37,
+      "key_findings": "All novel features combined: 0.15605 = identical to exp_048 (34 features). Adding A/TO (3 more features) to exp_048 gave zero improvement. 37 features = over-dilution. LECCI\u00c3\u201cN: exp_048 (HomeCourtDep+Consistency, 34 features) is the optimal novel feature set.",
+      "tags": [
+        "features",
+        "combo",
+        "all-novel",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_051_elo_grid_best",
+      "name": "Elo grid search on best config (exp_028, 0.15590). Elo params fixed since exp_00",
+      "parent_id": "exp_028_lr_optuna_cb",
+      "status": "completed",
+      "elapsed_seconds": 2206,
+      "cv_brier": 0.1562,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.491,
+        "lr": 0.509
+      },
+      "n_features": 29,
+      "key_findings": "Elo grid on best config: 0.15620 (worse than 0.15590). Elo params K=40, home=64, carry=0.65 confirmed optimal yet again. LECCI\u00c3\u201cN: Elo grid search is exhausted path.",
+      "tags": [
+        "elo-grid",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_052_optuna50_best",
+      "name": "Double Optuna trials from 25 to 50 on the best config (exp_028, 0.15590). More e",
+      "parent_id": "exp_028_lr_optuna_cb",
+      "status": "completed",
+      "elapsed_seconds": 967,
+      "cv_brier": 0.15591,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.517,
+        "lr": 0.483
+      },
+      "n_features": 29,
+      "key_findings": "50 Optuna trials: 0.15591 (only +0.00001 from best 0.15590!). CB improved 0.15808 vs 0.15815 (25 trials). Ensemble 51.7% CB + 48.3% LR. Virtually identical to exp_028. LECCI\u00c3\u201cN: 25 Optuna trials already near-optimal. Brier floor CONFIRMED at 0.15590 for this feature set.",
+      "tags": [
+        "optuna",
+        "hyperparams",
+        "no-improvement",
+        "brier-floor"
+      ]
+    },
+    {
+      "id": "exp_053_interactions",
+      "name": "Add interaction features (Elo\u00c3\u2014SeedHistWR, Elo\u00c3\u2014SeedNum, SeedHist\u00c3\u2014Gender) to be",
+      "parent_id": "exp_028_lr_optuna_cb",
+      "status": "completed",
+      "elapsed_seconds": 444,
+      "cv_brier": 0.15623,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.439,
+        "lr": 0.561
+      },
+      "n_features": 32,
+      "key_findings": "Interaction features worse (0.15623 vs 0.15590). Elo_x_Seed ranked 2nd (703) cannibalizing Elo_diff (658 vs 970). CB degraded 0.15919 vs 0.15815 with reused params. LR improved to 0.15804 (best). LECCION: Explicit interactions hurt trees (collinearity) while marginally helping LR.",
+      "tags": [
+        "features",
+        "interactions",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_054_lr_c01",
+      "name": "Stronger LR regularization (C=0.1 vs default C=1.0). LR is ~50% of ensemble weig",
+      "parent_id": "exp_028_lr_optuna_cb",
+      "status": "completed",
+      "elapsed_seconds": 440,
+      "cv_brier": 0.1567,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.46,
+        "lr": 0.54
+      },
+      "n_features": 29,
+      "key_findings": "LR C=0.1 worse (0.15670 vs 0.15590). LR barely changed (0.15837 vs 0.15839) \u00e2\u20ac\u201d already well-regularized at C=1.0. LECCION: LR is robust to C changes, default C=1.0 is fine.",
+      "tags": [
+        "models",
+        "lr-regularization",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_055_seedwr_gender_optuna",
+      "name": "Gender-specific seed matchup win rates (seed_hist_wr_by_gender=true). Men's and ",
+      "parent_id": "exp_028_lr_optuna_cb",
+      "status": "completed",
+      "elapsed_seconds": 817,
+      "cv_brier": 0.15549,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.472,
+        "lr": 0.528
+      },
+      "n_features": 31,
+      "key_findings": "NEW BEST! 0.15549 (-0.00041 vs 0.15590). Gender-specific seed WR: SeedHistWR_M=0.5067, SeedHistWR_W=0.4971 \u00e2\u20ac\u201d meaningful difference. LR best-ever 0.15790 (vs 0.15839). CB 0.15858. LGB improved to 0.17240. 5th improvement overall (exp_017->018->025->028->055). LECCION: Gender-specific features capture real structural differences in M/W tournaments.",
+      "tags": [
+        "features",
+        "seed-hist-wr",
+        "gender",
+        "optuna",
+        "new-best"
+      ]
+    },
+    {
+      "id": "exp_056_gender_hc_consist",
+      "name": "Add HC+Consistency to gender SeedWR base (exp_055, 0.15549). exp_048 (HC+Consist",
+      "parent_id": "exp_055_seedwr_gender_optuna",
+      "status": "completed",
+      "elapsed_seconds": 671,
+      "cv_brier": 0.15534,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.525,
+        "lr": 0.475
+      },
+      "n_features": 36,
+      "key_findings": "NEW BEST! 0.15534 (-0.00015 vs 0.15549). HC+Consistency now improve on gender SeedWR base (unlike old base where they hurt). CB 0.15824, LR 0.15882. HomeCourtDep ranked 5th, DefEff_Std 7th. 6th improvement overall. LECCION: Features that were marginal on old base become beneficial on stronger base.",
+      "tags": [
+        "features",
+        "combo",
+        "gender",
+        "hc",
+        "consistency",
+        "optuna",
+        "new-best"
+      ]
+    },
+    {
+      "id": "exp_057_gender_hc_consist_50t",
+      "name": "50 Optuna trials on exp_056 config (0.15534). 36 features = larger search space ",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 952,
+      "cv_brier": 0.15551,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.539,
+        "lr": 0.461
+      },
+      "n_features": 36,
+      "key_findings": "50 trials: 0.15551 vs 25-trial 0.15534. CB improved 0.15791 vs 0.15824 but ensemble worse. Better CB params shifted weight to 53.9% CB, reducing LR's complementary contribution. LECCION: 25-trial CB params more complementary to LR than 50-trial params. Confirmed again: more trials != better ensemble.",
+      "tags": [
+        "optuna",
+        "hyperparams",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_058_bayes_smooth_k5",
+      "name": "Bayes smoothing (k=5) on SeedHistWR for exp_056 config (0.15534). Rare seed matc",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 819,
+      "cv_brier": 0.15661,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.046,
+        "cb": 0.495,
+        "lr": 0.46
+      },
+      "n_features": 36,
+      "key_findings": "Bayes k=5 much worse (0.15661 vs 0.15534). Smoothing reduced SeedHistWR std from 0.2854 to 0.2714 \u00e2\u20ac\u201d lost discriminative power. XGB entered 4.6% but didn't compensate. LECCION: Raw seed matchup WR better than smoothed. Signal > noise reduction.",
+      "tags": [
+        "features",
+        "bayes-smoothing",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_059_gender_all_novel",
+      "name": "Add A/TO features (AstToTO, BlockRate, StealRate) to exp_056 (0.15534). On old b",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 779,
+      "cv_brier": 0.15605,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.471,
+        "lr": 0.529
+      },
+      "n_features": 39,
+      "key_findings": "A/TO still redundant on gender SeedWR base (0.15605 vs 0.15534). CB degraded 0.15914 vs 0.15824. 39 features = dilution. A/TO features consistently redundant across ALL bases tested. LECCION: A/TO is definitively exhausted.",
+      "tags": [
+        "features",
+        "ast-to",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_060_decay099",
+      "name": "Gentle season weight decay (0.99) on exp_056 (0.15534). exp_012 (decay=0.9) was ",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 452,
+      "cv_brier": 0.1559,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.461,
+        "lr": 0.539
+      },
+      "n_features": 36,
+      "key_findings": "Season decay=0.99: 0.15590 vs 0.15534. CB degraded 0.15968 vs 0.15824. Weight range [0.669,1.0]. LR shifted to 53.9% (from 47.5%). Even gentle decay hurts CB more than it helps. LECCION: Season weighting definitively exhausted.",
+      "tags": [
+        "season-decay",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_061_post_iso_cal",
+      "name": "Post-ensemble isotonic calibration on exp_056 (0.15534). Currently calibration i",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 452,
+      "cv_brier": 0.15651,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.427,
+        "lr": 0.573
+      },
+      "n_features": 36,
+      "key_findings": "Post-ensemble isotonic: 0.15651 (HC was 0.15651). Isotonic delta=+0.00727 \u00e2\u20ac\u201d MUCH WORSE. ~130 samples/fold = isotonic overfits. HC ensemble already well-calibrated. LECCION: Post-ensemble calibration needs more data than tournament CV provides.",
+      "tags": [
+        "calibration",
+        "isotonic",
+        "structural",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_062_stacking",
+      "name": "Stacking (Ridge meta-learner) instead of hill-climbing on exp_056 config. Ridge ",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 876,
+      "cv_brier": 0.16066,
+      "hc_weights": {
+        "lgb": 0.0291,
+        "xgb": -0.0414,
+        "cb": 0.5129,
+        "lr": 0.4831,
+        "_intercept": -0.0044
+      },
+      "n_features": 36,
+      "key_findings": "Stacking (Ridge): 0.16066 \u00e2\u20ac\u201d much worse than HC 0.15534. Ridge gave negative XGB weight (-0.04). With only ~130 samples/fold, stacking overfits. LECCION: Hill climbing >> stacking for small tournament datasets.",
+      "tags": [
+        "ensemble",
+        "stacking",
+        "structural",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_063_rerun_fresh_optuna",
+      "name": "Re-run exact exp_056 config with fresh Optuna 25 trials. CB shows ~0.002 varianc",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 781,
+      "cv_brier": 0.15613,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.525,
+        "lr": 0.475
+      },
+      "n_features": 36,
+      "key_findings": "Fresh Optuna re-run: 0.15613 vs original 0.15534. CB=0.15841 vs original 0.15824. Variance didn't favor us. exp_056's Optuna run was particularly good. LECCION: Run-to-run variance ~0.0008 in ensemble, exp_056 result is robust.",
+      "tags": [
+        "optuna",
+        "variance",
+        "rerun",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_064_conf_strength",
+      "name": "Add conference strength features to exp_056 (0.15534). Full-coverage feature nev",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 512,
+      "cv_brier": 0.15835,
+      "hc_weights": {
+        "lgb": 0.054,
+        "xgb": 0.0,
+        "cb": 0.323,
+        "lr": 0.622
+      },
+      "n_features": 40,
+      "key_findings": "Conf strength: 0.15835 vs 0.15534. ConfEloStd ranked #1 (839!), ConfEloMean #3 \u00e2\u20ac\u201d very strong signal BUT collinear with Elo. CB degraded 0.16376 with reused params. LGB entered 5.4%. LECCION: High importance != improvement. Conf features are collinear with existing Elo.",
+      "tags": [
+        "features",
+        "conference",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_065_conf_optuna",
+      "name": "Optuna 25 retune for conference strength features on exp_056 base. ConfEloStd ra",
+      "parent_id": "exp_064_conf_strength",
+      "status": "completed",
+      "elapsed_seconds": 912,
+      "cv_brier": 0.15758,
+      "hc_weights": {
+        "lgb": 0.018,
+        "xgb": 0.0,
+        "cb": 0.491,
+        "lr": 0.491
+      },
+      "n_features": 40,
+      "key_findings": "Conf + Optuna: 0.15758 (better than 0.15835 reused but worse than 0.15534). CB recovered to 0.16007 from 0.16376. Even with retune, 4 extra conf features net negative. LECCION: Conference strength definitively exhausted.",
+      "tags": [
+        "features",
+        "conference",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_066_momentum10",
+      "name": "Add momentum features (last 10 games win rate and margin) to exp_056 (0.15534). ",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 478,
+      "cv_brier": 0.15872,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.009,
+        "cb": 0.404,
+        "lr": 0.587
+      },
+      "n_features": 44,
+      "key_findings": "Momentum last 10: 0.15872 vs 0.15534. 44 features = too many. MomDelta_Win 8th, MomDelta_Off 9th \u00e2\u20ac\u201d some signal. CB degraded 0.16357 with reused params. XGB entered 0.9%. LECCION: Momentum features have moderate signal but 8 extra features cause dilution.",
+      "tags": [
+        "features",
+        "momentum",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_067_finer_hc",
+      "name": "Finer hill climbing step (0.005 vs 0.01) and more iterations (1000 vs 500) on ex",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 454,
+      "cv_brier": 0.15651,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.427,
+        "lr": 0.573
+      },
+      "n_features": 36,
+      "key_findings": "Finer HC step 0.005 + 1000 iter: 0.15651 vs 0.15534. Found CB=42.7%/LR=57.3%. CB variance (0.16067 vs original 0.15824) dominates any HC granularity effect. LECCION: HC step granularity doesn't matter; CB run variance is the bottleneck.",
+      "tags": [
+        "ensemble",
+        "hc-step",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_068_clip_03_97",
+      "name": "Tighter clip [0.03, 0.97] vs [0.02, 0.98]. More conservative extremes reduce Bri",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 451,
+      "cv_brier": 0.15655,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.427,
+        "lr": 0.573
+      },
+      "n_features": 36,
+      "key_findings": "Clip [0.03,0.97]: 0.15655 vs 0.15534. Negligible effect \u00e2\u20ac\u201d individual model scores within 0.001 of [0.02,0.98]. Models don't produce extreme enough predictions for clip to matter. LECCION: Clip range is irrelevant for CB+LR ensemble.",
+      "tags": [
+        "calibration",
+        "clip",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_069_simple_gender_rerun",
+      "name": "Re-run exp_055 config (gender SeedWR only, 31 features, 0.15549) with fresh Optu",
+      "parent_id": "exp_055_seedwr_gender_optuna",
+      "status": "completed",
+      "elapsed_seconds": 724,
+      "cv_brier": 0.1557,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.457,
+        "lr": 0.543
+      },
+      "n_features": 31,
+      "key_findings": "Simple gender SeedWR re-run: 0.15570 vs original 0.15549 (+0.00021). CB=0.15885 vs original 0.15858. Consistent around 0.1555-0.1557. LECCION: 31-feature config is robust at ~0.1555. exp_056 (36 features) at 0.15534 is marginally better.",
+      "tags": [
+        "rerun",
+        "variance",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_070_cb_regression",
+      "name": "CatBoostRegressor (RMSE) instead of CatBoostClassifier (Logloss) on exp_056 conf",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 721,
+      "cv_brier": 0.15629,
+      "hc_weights": {
+        "lgb": 0.01,
+        "xgb": 0.0,
+        "cb": 0.486,
+        "lr": 0.505
+      },
+      "n_features": 36,
+      "key_findings": "CB regression (RMSE): 0.15629 vs classifier 0.15534. CB=0.15901 \u00e2\u20ac\u201d regression is slightly worse than classifier for probability estimation. LGB entered 1%. LECCION: Logloss is better than RMSE for Brier optimization.",
+      "tags": [
+        "models",
+        "cb-regression",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_071_eval15",
+      "name": "eval_seasons=15 instead of 10 on exp_056 config. More seasons for HC weight opti",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 877,
+      "cv_brier": 0.16033,
+      "hc_weights": {
+        "lgb": 0.01,
+        "xgb": 0.01,
+        "cb": 0.48,
+        "lr": 0.5
+      },
+      "n_features": 36,
+      "key_findings": "eval_seasons=15: 0.16033 \u00e2\u20ac\u201d much worse. Older seasons (2010-2014) have different dynamics, diluting signal. CB=0.16304 (Optuna tuned on noisy data). LECCION: eval_seasons=10 is optimal \u00e2\u20ac\u201d recent data only.",
+      "tags": [
+        "cv",
+        "eval-seasons",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_072_eff_ratio",
+      "name": "Add efficiency ratio (OffEff/DefEff) to exp_056 config. Unlike OffEff-DefEff (=N",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 461,
+      "cv_brier": 0.15633,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.394,
+        "lr": 0.606
+      },
+      "n_features": 37,
+      "key_findings": "EffRatio (OffEff/DefEff): 0.15633 vs 0.15534. Didn't make top 10 features \u00e2\u20ac\u201d too correlated with NetEff. LR best-ever 0.15827 but CB degraded 0.16094. LECCION: Ratio and difference are near-identical for tree models.",
+      "tags": [
+        "features",
+        "eff-ratio",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_073_elo_grid_056",
+      "name": "Elo grid search on exp_056 config (best 0.15534). Elo grid never run on the new ",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 1192,
+      "cv_brier": 0.15617,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.535,
+        "lr": 0.465
+      },
+      "n_features": 36,
+      "key_findings": "Elo grid K=48,home=48 on exp_056: 0.15617 (worse than 0.15534). K=40/home=64 confirmed near-optimal on new base too.",
+      "tags": [
+        "elo-grid",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_074_lr_c10",
+      "name": "LR with C=10 (less regularization) on exp_056 config. With 36 features and gende",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 476,
+      "cv_brier": 0.15655,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.437,
+        "lr": 0.563
+      },
+      "n_features": 36,
+      "key_findings": "LR C=10: 0.15655. LR insensitive to C (0.15903 vs ~0.15882 at C=1). LECCI\u00c3\u201cN: LR C confirmed insensitive across all bases.",
+      "tags": [
+        "models",
+        "lr-regularization",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_075_cb_depth4",
+      "name": "CB depth=4 on exp_056 config. On old base: depth=3 (0.15974), depth=5 (0.15815),",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 478,
+      "cv_brier": 0.15651,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.427,
+        "lr": 0.573
+      },
+      "n_features": 36,
+      "key_findings": "CB depth=4: 0.15651. CB score identical to depth=5 (0.16067) \u00e2\u20ac\u201d depth override may not have taken effect with reused params. LR 0.15882. LECCI\u00c3\u201cN: Depth=5 confirmed optimal.",
+      "tags": [
+        "models",
+        "cb-depth",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_078_bradley_terry",
+      "name": "Add Bradley-Terry team strengths as feature alongside Elo. BT optimizes team str",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 773,
+      "cv_brier": 0.15578,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.456,
+        "lr": 0.544
+      },
+      "n_features": 37,
+      "key_findings": "BT as additional feature: 0.15578 vs 0.15534 (+0.00044). BT_Strength_diff ranked 3rd (676!) \u00e2\u20ac\u201d very strong signal, comparable to SeedHistWR. But CB degraded 0.15865 vs 0.15824 with 37 features. BT-Elo correlation 0.958 means partial collinearity. LR benefited more (54.4% weight). LECCI\u00c3\u201cN: BT has genuine decorrelated signal but 1 extra feature on top of 36 is net negative after Optuna retune.",
+      "tags": [
+        "features",
+        "bradley-terry",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_079_rest_days",
+      "name": "Add RestDays feature (days since last game before tournament). Teams with more r",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 497,
+      "cv_brier": 0.15672,
+      "hc_weights": {
+        "lgb": 0.042,
+        "xgb": 0.0,
+        "cb": 0.363,
+        "lr": 0.595
+      },
+      "n_features": 37,
+      "key_findings": "RestDays ranked 8th (importance 425) \u00e2\u20ac\u201d strong signal! CV 0.15672 with reused params. LGB entered 4.2%, LR rose to 59.5% \u00e2\u20ac\u201d significant ensemble diversification. Follows SeedHistWR pattern: high importance with old params. NEEDS OPTUNA RETUNE (exp_080).",
+      "tags": [
+        "features",
+        "rest-days",
+        "promising"
+      ]
+    },
+    {
+      "id": "exp_080_rest_days_optuna",
+      "name": "RestDays ranked 8th (importance 425) + Optuna retune for 37 features",
+      "parent_id": "exp_079_rest_days",
+      "status": "completed",
+      "elapsed_seconds": 817,
+      "cv_brier": 0.15638,
+      "hc_weights": {
+        "lgb": 0.058,
+        "xgb": 0.0,
+        "cb": 0.47,
+        "lr": 0.472
+      },
+      "n_features": 37,
+      "key_findings": "RestDays + Optuna: 0.15638 (better than reused 0.15672 but worse than 0.15534). CB improved 0.15850 vs 0.16135 reused. LGB still 5.8%. RestDays has real signal but 37 features still net negative vs 36-feature optimum.",
+      "tags": [
+        "features",
+        "rest-days",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_081_rest_travel_optuna",
+      "name": "RestDays + TravelDistance + Optuna. Two hypothesis-driven features: fatigue and travel.",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 841,
+      "cv_brier": 0.15572,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.528,
+        "lr": 0.472
+      },
+      "n_features": 38,
+      "key_findings": "RestDays + Travel + Optuna: 0.15572 (closest in this round, +0.00038 from best). CB 0.15819 (marginally better than exp_056's 0.15824). TravelDist not in top 10 \u00e2\u20ac\u201d only 579 M team-seasons coverage (2008-2025, Men's only). RestDays ranked 8th again. LECCI\u00c3\u201cN: TravelDist has too sparse coverage for consistent signal.",
+      "tags": [
+        "features",
+        "rest-days",
+        "travel",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_079_shooting_splits",
+      "name": "BASKETBALL HYPOTHESIS #3 (Style of Play): Teams that shoot more 3s vs teams that",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 462,
+      "cv_brier": 0.15651,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.427,
+        "lr": 0.573
+      },
+      "n_features": 42,
+      "key_findings": "Shooting Splits: 0.15651. Features didn't make top 10 \u00e2\u20ac\u201d ~96% zeros due to tournament-only coverage (~68 teams out of ~350+). Same coverage problem as Resumes. LECCION: Tournament-only external data can't help with combined M+W training data.",
+      "tags": [
+        "features",
+        "shooting-splits",
+        "hypothesis-3",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_080_ap_poll",
+      "name": "BASKETBALL HYPOTHESIS #4 (Media Momentum): Teams rising in AP polls have psychol",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 477,
+      "cv_brier": 0.15651,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.006,
+        "cb": 0.422,
+        "lr": 0.572
+      },
+      "n_features": 39,
+      "key_findings": "AP Poll: 0.15651. Only 892 rows (M-only, ranked teams). Features too sparse. XGB slightly improved (0.17190) and entered 0.6%. LECCION: AP poll signal captured by Elo/MasseyMean already.",
+      "tags": [
+        "features",
+        "ap-poll",
+        "hypothesis-4",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_081_overtime",
+      "name": "BASKETBALL HYPOTHESIS #8 (Overtime as signal): Teams with many OT games may be c",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 463,
+      "cv_brier": 0.15696,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.404,
+        "lr": 0.596
+      },
+      "n_features": 38,
+      "key_findings": "Overtime: 0.15696. Full coverage but low signal \u00e2\u20ac\u201d OT games are ~5% of games and OT occurrence is random, not a stable team trait. LECCION: OT is noise, not signal for tournament prediction.",
+      "tags": [
+        "features",
+        "overtime",
+        "hypothesis-8",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_082_kenpom_height",
+      "name": "BASKETBALL HYPOTHESIS #2 (Altura/Tama\u00c3\u00b1o): Taller teams dominate the paint in to",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 474,
+      "cv_brier": 0.15681,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.072,
+        "cb": 0.347,
+        "lr": 0.581
+      },
+      "n_features": 40,
+      "key_findings": "Height features: 0.15681 vs 0.15534. Didn't make top 10. BUT XGB entered at 7.2% (best ever) \u00e2\u20ac\u201d height diversifies ensemble. 4 features (AvgHgt, EffHgt, CHgt, Exp) only available for M teams (~50% training). LECCION: KenPom height = M-only coverage, W matchups get zeros.",
+      "tags": [
+        "features",
+        "height",
+        "hypothesis-2",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_083_height_bench_optuna",
+      "name": "HYPOTHESIS #2+#5 (Height+Bench): exp_082 showed XGB entered at 7.2% (best ever) ",
+      "parent_id": "exp_082_kenpom_height",
+      "status": "completed",
+      "elapsed_seconds": 863,
+      "cv_brier": 0.15625,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.519,
+        "lr": 0.481
+      },
+      "n_features": 41,
+      "key_findings": "Height+Bench+Optuna: 0.15625 (better than reused 0.15681). CB recovered 0.15874 vs 0.16157. XGB lost 7.2% weight with proper Optuna \u00e2\u20ac\u201d CB reclaims dominance. 41 features still net negative. LECCION: Height features diversify ensemble with bad CB params but lose that advantage with proper tuning.",
+      "tags": [
+        "features",
+        "height",
+        "bench",
+        "hypothesis-2-5",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_084_experience_only",
+      "name": "HYPOTHESIS #2 refined: Only Experience (returning player years) from KenPom. Exp",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 759,
+      "cv_brier": 0.15621,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.514,
+        "lr": 0.486
+      },
+      "n_features": 37,
+      "key_findings": "Experience only + Optuna: 0.15621. Didn't make top 10. CB 0.15860 (close to exp_056's 0.15824). Signal already captured by existing features. LECCION: Experience is redundant with Elo/WinPct \u00e2\u20ac\u201d experienced teams already have higher Elo.",
+      "tags": [
+        "features",
+        "experience",
+        "hypothesis-2",
+        "optuna",
+        "no-improvement"
+      ]
+    },
+    {
+      "id": "exp_085_point_dist",
+      "name": "HYPOTHESIS #6 (Distribuci\u00c3\u00b3n de anotaci\u00c3\u00b3n): Teams that score more from 3PT vs F",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 494,
+      "cv_brier": 0.15736,
+      "hc_weights": {
+        "lgb": 0.044,
+        "xgb": 0.0,
+        "cb": 0.333,
+        "lr": 0.622
+      },
+      "n_features": 39,
+      "key_findings": "Point Distribution reused: 0.15736. Off3Pct/OffFTPct/Def3Pct didn't make top 10. Redundant with eFG and FTRate. LGB entered 4.4%. 8623 rows = good M coverage but M-only. LECCION: Shooting style redundant with existing efficiency features.",
+      "tags": ["features", "point-dist", "hypothesis-6", "no-improvement"]
+    },
+    {
+      "id": "exp_086_point_dist_optuna",
+      "name": "HYPOTHESIS #6 + Optuna retune: Point Distribution features had LGB enter 4.4% in",
+      "parent_id": "exp_085_point_dist",
+      "status": "completed",
+      "elapsed_seconds": 840,
+      "cv_brier": 0.15683,
+      "hc_weights": {
+        "lgb": 0.048,
+        "xgb": 0.0,
+        "cb": 0.448,
+        "lr": 0.505
+      },
+      "n_features": 39,
+      "key_findings": "Point Dist + Optuna: 0.15683 (better than reused 0.15736 but worse than 0.15534). CB 0.15941. Even with retune, point distribution is net negative. LECCION: Point distribution definitively exhausted.",
+      "tags": ["features", "point-dist", "hypothesis-6", "optuna", "no-improvement"]
+    },
+    {
+      "id": "exp_087_rerun_056_v2",
+      "name": "Re-run exp_056 config with fresh Optuna. Previous reruns: exp_063=0.15613, exp_0",
+      "parent_id": "exp_056_gender_hc_consist",
+      "status": "completed",
+      "elapsed_seconds": 859,
+      "cv_brier": 0.15629,
+      "hc_weights": {
+        "lgb": 0.0,
+        "xgb": 0.0,
+        "cb": 0.477,
+        "lr": 0.523
+      },
+      "n_features": 36,
+      "key_findings": "3rd re-run: 0.15629 (CB=0.15939). Three runs: 0.15534/0.15613/0.15629. CB range: 0.15824-0.15939. exp_056 was a lucky run. LECCION: Robust average ~0.1562, exp_056's 0.15534 is ~1.5 sigma lucky.",
+      "tags": ["rerun", "variance", "no-improvement"]
+    }
+  ]
+}

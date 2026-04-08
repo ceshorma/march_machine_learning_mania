@@ -1,0 +1,23 @@
+{
+  "id": "exp_015_momentum_10",
+  "parent": "exp_000_v3b_baseline",
+  "hypothesis": "Add momentum features (last 10 games) — recent form + delta vs season avg. Full coverage, captures hot/cold streaks entering tournament.",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 10,
+    "conference_strength": false, "separate_models_mw": false
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true,
+    "cb_optuna_trials": 0, "cb_reuse_params": "exp_000_v3b_baseline"
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

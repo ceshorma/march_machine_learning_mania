@@ -1,0 +1,27 @@
+{
+  "id": "exp_067_finer_hc",
+  "parent": "exp_056_gender_hc_consist",
+  "hypothesis": "Finer hill climbing step (0.005 vs 0.01) and more iterations (1000 vs 500) on exp_056 config. Weights currently at CB=0.525/LR=0.475 in 1% increments. 0.5% granularity may find better CB/LR balance. Reuse CB params.",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 0,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true,
+    "seed_hist_wr_by_gender": true,
+    "neutral_court_features": true,
+    "consistency_features": true
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true, "lr": true,
+    "cb_reuse_params": "exp_056_gender_hc_consist"
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.005, "n_iter": 1000},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

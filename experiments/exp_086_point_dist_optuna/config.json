@@ -1,0 +1,28 @@
+{
+  "id": "exp_086_point_dist_optuna",
+  "parent": "exp_085_point_dist",
+  "hypothesis": "HYPOTHESIS #6 + Optuna retune: Point Distribution features had LGB enter 4.4% in exp_085 (ensemble diversification). CB was untuned. Optuna may find CB params that work with 39 features. 8623 rows = best M coverage of any KenPom data.",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 0,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true,
+    "seed_hist_wr_by_gender": true,
+    "neutral_court_features": true,
+    "consistency_features": true,
+    "kenpom_point_dist": true
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true, "lr": true,
+    "cb_optuna_trials": 25
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

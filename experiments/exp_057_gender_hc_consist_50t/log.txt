@@ -1,0 +1,93 @@
+============================================================
+EXPERIMENT: exp_057_gender_hc_consist_50t
+Hypothesis: 50 Optuna trials on exp_056 config (0.15534). 36 features = larger search space than 29-feature configs where 25 trials sufficed. More trials may find better CB params for this richer feature set.
+Parent: exp_056_gender_hc_consist
+============================================================
+
+[1/10] Loading Kaggle data...
+  Men: 198,079 reg + 2,585 tourney | Women: 142,093 reg + 1,717 tourney
+
+[2/10] Loading external data...
+  KenPom individual: 8810 rows
+  Barttorvik individual: 4387 rows
+
+[3/10] Elo (fixed): K=40, home=64, carry=0.65
+
+[4/10] Computing efficiency...
+  Men: (8346, 16), Women: (5965, 16)
+
+[5/10] Seeds + Massey...
+  Massey Men: (8356, 8)
+
+[6/10] Building team features...
+  Men: (13753, 34), Women: (9851, 18)
+
+[7/10] Building matchup data...
+  Adding historical seed matchup win rates (leak-free)...
+  SeedHistWR: mean=0.5044, std=0.2854
+  Adding gender-specific SeedHistWR...
+    SeedHistWR_M: mean=0.5067
+    SeedHistWR_W: mean=0.4971
+  Training: (4302, 40), Features (36): ['BT_ADJDE_diff', 'BT_ADJOE_diff', 'BT_ADJ_T_diff', 'BT_BARTHAG_diff', 'BT_EFG_D_diff', 'BT_EFG_O_diff', 'BT_WAB_diff', 'DefEff_Std_diff', 'DefEff_diff', 'Elo_diff']...
+
+[8/10] Optuna CatBoost tuning (50 trials)...
+  Best Brier: 0.15791
+
+[9/10] Temporal CV (Brier, last 10 seasons)...
+  2015 | n=130 | LGB=0.14663 | XGB=0.14622 | CB=0.13432 | LR=0.13331
+  2016 | n=130 | LGB=0.20893 | XGB=0.20157 | CB=0.17769 | LR=0.16778
+  2017 | n=130 | LGB=0.17526 | XGB=0.18184 | CB=0.16609 | LR=0.16276
+  2018 | n=130 | LGB=0.19672 | XGB=0.19104 | CB=0.17006 | LR=0.17870
+  2019 | n=130 | LGB=0.15182 | XGB=0.15114 | CB=0.14016 | LR=0.14075
+  2021 | n=129 | LGB=0.18542 | XGB=0.18974 | CB=0.16780 | LR=0.17118
+  2022 | n=134 | LGB=0.18647 | XGB=0.18707 | CB=0.17008 | LR=0.16899
+  2023 | n=134 | LGB=0.20185 | XGB=0.19559 | CB=0.17925 | LR=0.18134
+  2024 | n=134 | LGB=0.16341 | XGB=0.17164 | CB=0.15277 | LR=0.15629
+  2025 | n=134 | LGB=0.12542 | XGB=0.11782 | CB=0.12089 | LR=0.12709
+
+  LGB: 0.17419 | XGB: 0.17337 | CB: 0.15791 | LR: 0.15882
+  HC Brier: 0.15551 | Weights: {'lgb': 0.0, 'xgb': 0.0, 'cb': 0.539, 'lr': 0.461}
+
+  Top features:
+    Elo_diff                                   846
+    RecordWinPct_diff                          779
+    SeedHistWR                                 730
+    KP_AdjDE_diff                              519
+    HomeCourtDep_diff                          481
+    FTRate_diff                                477
+    DefEff_Std_diff                            471
+    OffEff_Std_diff                            423
+    ORBRate_diff                               408
+    TORate_diff                                402
+
+[10/10] Generating submissions...
+
+  stage1...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage1_exp_057_gender_hc_consist_50t.csv | mean=0.5021, std=0.2694
+
+  stage2...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage2_exp_057_gender_hc_consist_50t.csv | mean=0.5051, std=0.2244
+
+============================================================
+DONE in 952s | CV Brier: 0.15551 | Features: 36
+============================================================

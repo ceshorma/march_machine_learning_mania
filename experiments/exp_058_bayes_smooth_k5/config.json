@@ -1,0 +1,28 @@
+{
+  "id": "exp_058_bayes_smooth_k5",
+  "parent": "exp_056_gender_hc_consist",
+  "hypothesis": "Bayes smoothing (k=5) on SeedHistWR for exp_056 config (0.15534). Rare seed matchups (1v16, 2v15) have few games — smoothing toward mean reduces noise. Gender-specific WR especially benefits since women's data is sparser.",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 0,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true,
+    "seed_hist_wr_by_gender": true,
+    "seed_hist_wr_bayes_k": 5,
+    "neutral_court_features": true,
+    "consistency_features": true
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true, "lr": true,
+    "cb_optuna_trials": 25
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

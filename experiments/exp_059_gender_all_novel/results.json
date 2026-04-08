@@ -1,0 +1,120 @@
+{
+  "id": "exp_059_gender_all_novel",
+  "status": "completed",
+  "elapsed_seconds": 779,
+  "cv_brier": {
+    "lgb": 0.17619,
+    "xgb": 0.17391,
+    "cb": 0.15914,
+    "ensemble_hc": 0.15605
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.0,
+    "cb": 0.471,
+    "lr": 0.529
+  },
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "cb_optuna_params": {
+    "learning_rate": 0.0202,
+    "depth": 4,
+    "l2_leaf_reg": 4.4739,
+    "iterations": 600,
+    "min_data_in_leaf": 19,
+    "random_strength": 0.1058,
+    "bagging_temperature": 0.5942,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss"
+  },
+  "n_features": 39,
+  "feature_importance_top20": [
+    [
+      "RecordWinPct_diff",
+      770
+    ],
+    [
+      "Elo_diff",
+      749
+    ],
+    [
+      "SeedHistWR",
+      689
+    ],
+    [
+      "KP_AdjDE_diff",
+      481
+    ],
+    [
+      "DefEff_Std_diff",
+      430
+    ],
+    [
+      "Margin_Std_diff",
+      427
+    ],
+    [
+      "FTRate_diff",
+      414
+    ],
+    [
+      "HomeCourtDep_diff",
+      409
+    ],
+    [
+      "OffEff_diff",
+      373
+    ],
+    [
+      "ORBRate_diff",
+      364
+    ],
+    [
+      "KP_AdjOE_diff",
+      353
+    ],
+    [
+      "OffEff_Std_diff",
+      346
+    ],
+    [
+      "AstToTO_diff",
+      335
+    ],
+    [
+      "StealRate_diff",
+      333
+    ],
+    [
+      "SeedNum_diff",
+      327
+    ],
+    [
+      "BlockRate_diff",
+      319
+    ],
+    [
+      "KP_AdjTempo_diff",
+      317
+    ],
+    [
+      "TORate_diff",
+      300
+    ],
+    [
+      "SeedHistWR_M",
+      290
+    ],
+    [
+      "NeutralWR_diff",
+      279
+    ]
+  ],
+  "clip_range": [
+    0.02,
+    0.98
+  ]
+}

@@ -1,0 +1,24 @@
+{
+  "id": "exp_039_momentum_optuna",
+  "parent": "exp_025_lr_blend",
+  "hypothesis": "Momentum features (last 10 games) + fresh Optuna 25 trials to retune CB for 37 features. exp_015 and exp_034 showed momentum has signal (ranked 5-7th) but CB params tuned for 29 features hurt. Retuning CB for 37 features could unlock the momentum signal.",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 10,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true, "lr": true,
+    "cb_optuna_trials": 25
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

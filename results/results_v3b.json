@@ -1,0 +1,41 @@
+{
+  "version": "v3b",
+  "elapsed_seconds": 1097.2864427566528,
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "catboost_optuna_params": {
+    "learning_rate": 0.0273,
+    "depth": 5,
+    "l2_leaf_reg": 2.6971,
+    "iterations": 354,
+    "min_data_in_leaf": 30,
+    "random_strength": 0.9418,
+    "bagging_temperature": 1.3331,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss",
+    "verbose": 0
+  },
+  "cv_brier": {
+    "lgb": 0.17606,
+    "xgb": 0.17392,
+    "cb": 0.15853,
+    "ensemble_avg": 0.16569,
+    "ensemble_hc": 0.15848,
+    "isotonic": 0.16539
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.0,
+    "cb": 1.0
+  },
+  "use_isotonic": false,
+  "clip_range": [
+    0.02,
+    0.98
+  ],
+  "n_features": 28,
+  "n_optuna_trials": 25
+}

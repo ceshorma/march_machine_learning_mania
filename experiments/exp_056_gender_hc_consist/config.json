@@ -1,0 +1,27 @@
+{
+  "id": "exp_056_gender_hc_consist",
+  "parent": "exp_055_seedwr_gender_optuna",
+  "hypothesis": "Add HC+Consistency to gender SeedWR base (exp_055, 0.15549). exp_048 (HC+Consistency on old base) got 0.15605. On the new stronger base, these may cross the threshold. 36 features total. Optuna 25 retune.",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 0,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true,
+    "seed_hist_wr_by_gender": true,
+    "neutral_court_features": true,
+    "consistency_features": true
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true, "lr": true,
+    "cb_optuna_trials": 25
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

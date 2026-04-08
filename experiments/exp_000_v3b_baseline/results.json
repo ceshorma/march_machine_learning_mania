@@ -1,0 +1,35 @@
+{
+  "id": "exp_000_v3b_baseline",
+  "status": "completed",
+  "elapsed_seconds": 1097,
+  "cv_brier": {
+    "lgb": 0.17606,
+    "xgb": 0.17392,
+    "cb": 0.15853,
+    "ensemble_avg": 0.16569,
+    "ensemble_hc": 0.15848,
+    "isotonic": 0.16539,
+    "seed_baseline": 0.17565
+  },
+  "hc_weights": {"lgb": 0.0, "xgb": 0.0, "cb": 1.0},
+  "use_isotonic": false,
+  "elo_params": {"k": 40, "home_adv": 64, "carryover": 0.65},
+  "cb_optuna_params": {
+    "learning_rate": 0.0273, "depth": 5, "l2_leaf_reg": 2.6971,
+    "iterations": 354, "min_data_in_leaf": 30,
+    "random_strength": 0.9418, "bagging_temperature": 1.3331
+  },
+  "n_features": 28,
+  "feature_importance_top15": [
+    ["Elo_diff", 1105], ["RecordWinPct_diff", 936], ["FTRate_diff", 697],
+    ["KP_AdjDE_diff", 617], ["ORBRate_diff", 596], ["TORate_diff", 595],
+    ["DefEff_diff", 562], ["eFG_diff", 510], ["OffEff_diff", 505],
+    ["NetEff_diff", 498], ["SeedNum_diff", 495], ["KP_AdjOE_diff", 477],
+    ["KP_AdjTempo_diff", 383], ["WinPct_diff", 322], ["MasseyStd_diff", 316]
+  ],
+  "kaggle_lb": 0.11220,
+  "submission_stats": {
+    "stage1_mean": 0.4835, "stage1_std": 0.3113,
+    "stage2_mean": 0.4766, "stage2_std": 0.2820
+  }
+}

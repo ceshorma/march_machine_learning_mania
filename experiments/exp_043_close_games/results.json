@@ -1,0 +1,120 @@
+{
+  "id": "exp_043_close_games",
+  "status": "completed",
+  "elapsed_seconds": 426,
+  "cv_brier": {
+    "lgb": 0.17638,
+    "xgb": 0.17584,
+    "cb": 0.15948,
+    "ensemble_hc": 0.15675
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.0,
+    "cb": 0.464,
+    "lr": 0.536
+  },
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "cb_optuna_params": {
+    "learning_rate": 0.0273,
+    "depth": 5,
+    "l2_leaf_reg": 19.2828,
+    "iterations": 236,
+    "min_data_in_leaf": 37,
+    "random_strength": 0.194,
+    "bagging_temperature": 0.0438,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss"
+  },
+  "n_features": 31,
+  "feature_importance_top20": [
+    [
+      "SeedHistWR",
+      951
+    ],
+    [
+      "Elo_diff",
+      937
+    ],
+    [
+      "RecordWinPct_diff",
+      917
+    ],
+    [
+      "KP_AdjDE_diff",
+      608
+    ],
+    [
+      "FTRate_diff",
+      601
+    ],
+    [
+      "ORBRate_diff",
+      484
+    ],
+    [
+      "TORate_diff",
+      476
+    ],
+    [
+      "DefEff_diff",
+      468
+    ],
+    [
+      "OffEff_diff",
+      458
+    ],
+    [
+      "CloseGameWR_diff",
+      452
+    ],
+    [
+      "KP_AdjOE_diff",
+      415
+    ],
+    [
+      "eFG_diff",
+      415
+    ],
+    [
+      "SeedNum_diff",
+      386
+    ],
+    [
+      "NetEff_diff",
+      379
+    ],
+    [
+      "KP_AdjTempo_diff",
+      365
+    ],
+    [
+      "WinPct_diff",
+      267
+    ],
+    [
+      "KP_AdjEM_diff",
+      266
+    ],
+    [
+      "MasseyStd_diff",
+      262
+    ],
+    [
+      "CloseGameN_diff",
+      220
+    ],
+    [
+      "MasseyMin_diff",
+      207
+    ]
+  ],
+  "clip_range": [
+    0.02,
+    0.98
+  ]
+}

@@ -1,0 +1,92 @@
+============================================================
+EXPERIMENT: exp_081_overtime
+Hypothesis: BASKETBALL HYPOTHESIS #8 (Overtime as signal): Teams with many OT games may be clutch (can close games) or inconsistent (can't pull away). OTGames count and OTWinRate from regular season detailed results â€” FULL COVERAGE unlike external data. 38 features.
+Parent: exp_056_gender_hc_consist
+============================================================
+
+[1/10] Loading Kaggle data...
+  Men: 198,079 reg + 2,585 tourney | Women: 142,093 reg + 1,717 tourney
+
+[2/10] Loading external data...
+  KenPom individual: 8810 rows
+  Barttorvik individual: 4387 rows
+
+[3/10] Elo (fixed): K=40, home=64, carry=0.65
+
+[4/10] Computing efficiency...
+  Men: (8346, 18), Women: (5965, 18)
+
+[5/10] Seeds + Massey...
+  Massey Men: (8356, 8)
+
+[6/10] Building team features...
+  Men: (13753, 36), Women: (9851, 20)
+
+[7/10] Building matchup data...
+  Adding historical seed matchup win rates (leak-free)...
+  SeedHistWR: mean=0.5044, std=0.2854
+  Adding gender-specific SeedHistWR...
+    SeedHistWR_M: mean=0.5067
+    SeedHistWR_W: mean=0.4971
+  Training: (4302, 42), Features (38): ['BT_ADJDE_diff', 'BT_ADJOE_diff', 'BT_ADJ_T_diff', 'BT_BARTHAG_diff', 'BT_EFG_D_diff', 'BT_EFG_O_diff', 'BT_WAB_diff', 'DefEff_Std_diff', 'DefEff_diff', 'Elo_diff']...
+
+[8/10] Reusing CatBoost params from exp_056_gender_hc_consist
+
+[9/10] Temporal CV (Brier, last 10 seasons)...
+  2015 | n=130 | LGB=0.14512 | XGB=0.14536 | CB=0.13580 | LR=0.13372
+  2016 | n=130 | LGB=0.20844 | XGB=0.20381 | CB=0.18150 | LR=0.16736
+  2017 | n=130 | LGB=0.17945 | XGB=0.18118 | CB=0.16323 | LR=0.16179
+  2018 | n=130 | LGB=0.19366 | XGB=0.18775 | CB=0.18351 | LR=0.17800
+  2019 | n=130 | LGB=0.15376 | XGB=0.15528 | CB=0.14337 | LR=0.14278
+  2021 | n=129 | LGB=0.18530 | XGB=0.18874 | CB=0.17238 | LR=0.17227
+  2022 | n=134 | LGB=0.18914 | XGB=0.18874 | CB=0.17117 | LR=0.16794
+  2023 | n=134 | LGB=0.20827 | XGB=0.20924 | CB=0.17838 | LR=0.18341
+  2024 | n=134 | LGB=0.16276 | XGB=0.17028 | CB=0.15771 | LR=0.15598
+  2025 | n=134 | LGB=0.12140 | XGB=0.12017 | CB=0.12516 | LR=0.12623
+
+  LGB: 0.17473 | XGB: 0.17506 | CB: 0.16122 | LR: 0.15895
+  HC Brier: 0.15696 | Weights: {'lgb': 0.0, 'xgb': 0.0, 'cb': 0.404, 'lr': 0.596}
+
+  Top features:
+    RecordWinPct_diff                          862
+    Elo_diff                                   769
+    SeedHistWR                                 729
+    KP_AdjDE_diff                              480
+    DefEff_Std_diff                            462
+    FTRate_diff                                455
+    HomeCourtDep_diff                          427
+    Margin_Std_diff                            398
+    OffEff_Std_diff                            397
+    TORate_diff                                390
+
+[10/10] Generating submissions...
+
+  stage1...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage1_exp_081_overtime.csv | mean=0.5034, std=0.2696
+
+  stage2...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage2_exp_081_overtime.csv | mean=0.5114, std=0.2374
+
+============================================================
+DONE in 463s | CV Brier: 0.15696 | Features: 38
+============================================================

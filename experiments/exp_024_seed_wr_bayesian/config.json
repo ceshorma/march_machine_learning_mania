@@ -1,0 +1,25 @@
+{
+  "id": "exp_024_seed_wr_bayesian",
+  "parent": "exp_018_seed_wr_elo_grid",
+  "hypothesis": "Bayesian-smoothed SeedHistWR (k=5) — shrink rare matchup rates toward global prior to reduce noise in low-sample matchups like 1v16",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 0,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true,
+    "seed_hist_wr_bayes_k": 5
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true,
+    "cb_optuna_trials": 0, "cb_reuse_params": "exp_017_seed_wr_optuna"
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

@@ -1,0 +1,25 @@
+{
+  "id": "exp_049_ato_optuna",
+  "parent": "exp_044_ast_defense",
+  "hypothesis": "A/TO + Defense features (AstToTO 7th, BlockRate 8th, StealRate 9th) + Optuna retune 25 trials. In exp_044, LR hit best-ever 0.15807 and LR weight was highest-ever 61.3%. CB params need retune for 32 features.",
+  "elo": {"grid_search": false, "k": 40, "home_adv": 64, "carryover": 0.65},
+  "features": {
+    "efficiency": true, "massey": true, "seeds": true, "record": true,
+    "kenpom": true, "barttorvik": true,
+    "kp_bt_combined": false, "evan_miya": false, "resumes": false,
+    "f538": false, "coach": false, "momentum_last_n": 0,
+    "conference_strength": false, "separate_models_mw": false,
+    "seed_hist_wr": true,
+    "ast_to_features": true
+  },
+  "models": {
+    "lgb": true, "xgb": true, "cb": true, "lr": true,
+    "cb_optuna_trials": 25
+  },
+  "ensemble": {"method": "hill_climbing", "step": 0.01, "n_iter": 500},
+  "calibration": "auto",
+  "clip": [0.02, 0.98],
+  "seeds_count": 10,
+  "eval_seasons": 10,
+  "auto_submit_if_better": true
+}

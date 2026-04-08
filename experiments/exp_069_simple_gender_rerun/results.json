@@ -1,0 +1,120 @@
+{
+  "id": "exp_069_simple_gender_rerun",
+  "status": "completed",
+  "elapsed_seconds": 724,
+  "cv_brier": {
+    "lgb": 0.1724,
+    "xgb": 0.17126,
+    "cb": 0.15885,
+    "ensemble_hc": 0.1557
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.0,
+    "cb": 0.457,
+    "lr": 0.543
+  },
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "cb_optuna_params": {
+    "learning_rate": 0.029,
+    "depth": 6,
+    "l2_leaf_reg": 9.0261,
+    "iterations": 318,
+    "min_data_in_leaf": 50,
+    "random_strength": 0.1008,
+    "bagging_temperature": 1.716,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss"
+  },
+  "n_features": 31,
+  "feature_importance_top20": [
+    [
+      "Elo_diff",
+      968
+    ],
+    [
+      "RecordWinPct_diff",
+      913
+    ],
+    [
+      "SeedHistWR",
+      852
+    ],
+    [
+      "FTRate_diff",
+      547
+    ],
+    [
+      "KP_AdjDE_diff",
+      544
+    ],
+    [
+      "DefEff_diff",
+      507
+    ],
+    [
+      "ORBRate_diff",
+      493
+    ],
+    [
+      "OffEff_diff",
+      455
+    ],
+    [
+      "eFG_diff",
+      455
+    ],
+    [
+      "TORate_diff",
+      445
+    ],
+    [
+      "NetEff_diff",
+      397
+    ],
+    [
+      "KP_AdjTempo_diff",
+      393
+    ],
+    [
+      "KP_AdjOE_diff",
+      385
+    ],
+    [
+      "SeedNum_diff",
+      366
+    ],
+    [
+      "SeedHistWR_M",
+      317
+    ],
+    [
+      "SeedHistWR_W",
+      317
+    ],
+    [
+      "MasseyStd_diff",
+      293
+    ],
+    [
+      "WinPct_diff",
+      250
+    ],
+    [
+      "KP_AdjEM_diff",
+      248
+    ],
+    [
+      "MasseyMin_diff",
+      212
+    ]
+  ],
+  "clip_range": [
+    0.02,
+    0.98
+  ]
+}

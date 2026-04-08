@@ -1,0 +1,92 @@
+============================================================
+EXPERIMENT: exp_072_eff_ratio
+Hypothesis: Add efficiency ratio (OffEff/DefEff) to exp_056 config. Unlike OffEff-DefEff (=NetEff), the ratio captures multiplicative dominance â€” a team with 110/90 (ratio=1.22) is different from 100/80 (ratio=1.25) despite same NetEff=20. 37 features. Reuse CB params.
+Parent: exp_056_gender_hc_consist
+============================================================
+
+[1/10] Loading Kaggle data...
+  Men: 198,079 reg + 2,585 tourney | Women: 142,093 reg + 1,717 tourney
+
+[2/10] Loading external data...
+  KenPom individual: 8810 rows
+  Barttorvik individual: 4387 rows
+
+[3/10] Elo (fixed): K=40, home=64, carry=0.65
+
+[4/10] Computing efficiency...
+  Men: (8346, 17), Women: (5965, 17)
+
+[5/10] Seeds + Massey...
+  Massey Men: (8356, 8)
+
+[6/10] Building team features...
+  Men: (13753, 35), Women: (9851, 19)
+
+[7/10] Building matchup data...
+  Adding historical seed matchup win rates (leak-free)...
+  SeedHistWR: mean=0.5044, std=0.2854
+  Adding gender-specific SeedHistWR...
+    SeedHistWR_M: mean=0.5067
+    SeedHistWR_W: mean=0.4971
+  Training: (4302, 41), Features (37): ['BT_ADJDE_diff', 'BT_ADJOE_diff', 'BT_ADJ_T_diff', 'BT_BARTHAG_diff', 'BT_EFG_D_diff', 'BT_EFG_O_diff', 'BT_WAB_diff', 'DefEff_Std_diff', 'DefEff_diff', 'EffRatio_diff']...
+
+[8/10] Reusing CatBoost params from exp_056_gender_hc_consist
+
+[9/10] Temporal CV (Brier, last 10 seasons)...
+  2015 | n=130 | LGB=0.15724 | XGB=0.14143 | CB=0.13696 | LR=0.13303
+  2016 | n=130 | LGB=0.20090 | XGB=0.19951 | CB=0.18057 | LR=0.16784
+  2017 | n=130 | LGB=0.17642 | XGB=0.17870 | CB=0.16676 | LR=0.16280
+  2018 | n=130 | LGB=0.19837 | XGB=0.19295 | CB=0.18345 | LR=0.17873
+  2019 | n=130 | LGB=0.14911 | XGB=0.14777 | CB=0.14054 | LR=0.14033
+  2021 | n=129 | LGB=0.18102 | XGB=0.18488 | CB=0.17325 | LR=0.17091
+  2022 | n=134 | LGB=0.18369 | XGB=0.18958 | CB=0.17059 | LR=0.16744
+  2023 | n=134 | LGB=0.20817 | XGB=0.20887 | CB=0.18299 | LR=0.18096
+  2024 | n=134 | LGB=0.16712 | XGB=0.17416 | CB=0.15750 | LR=0.15572
+  2025 | n=134 | LGB=0.12261 | XGB=0.11821 | CB=0.11681 | LR=0.12493
+
+  LGB: 0.17447 | XGB: 0.17360 | CB: 0.16094 | LR: 0.15827
+  HC Brier: 0.15633 | Weights: {'lgb': 0.0, 'xgb': 0.0, 'cb': 0.394, 'lr': 0.606}
+
+  Top features:
+    Elo_diff                                   815
+    RecordWinPct_diff                          781
+    SeedHistWR                                 657
+    KP_AdjDE_diff                              482
+    DefEff_Std_diff                            471
+    FTRate_diff                                465
+    HomeCourtDep_diff                          464
+    OffEff_Std_diff                            458
+    Margin_Std_diff                            434
+    ORBRate_diff                               421
+
+[10/10] Generating submissions...
+
+  stage1...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage1_exp_072_eff_ratio.csv | mean=0.5018, std=0.2654
+
+  stage2...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage2_exp_072_eff_ratio.csv | mean=0.5072, std=0.2347
+
+============================================================
+DONE in 461s | CV Brier: 0.15633 | Features: 37
+============================================================

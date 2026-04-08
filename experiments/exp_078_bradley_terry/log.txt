@@ -1,0 +1,95 @@
+============================================================
+EXPERIMENT: exp_078_bradley_terry
+Hypothesis: Add Bradley-Terry team strengths as feature alongside Elo. BT optimizes team strengths globally via MLE (vs Elo's sequential updates). BT-Elo correlation=0.958, so 4% decorrelated info. With Optuna retune for 37 features.
+Parent: exp_056_gender_hc_consist
+============================================================
+
+[1/10] Loading Kaggle data...
+  Men: 198,079 reg + 2,585 tourney | Women: 142,093 reg + 1,717 tourney
+
+[2/10] Loading external data...
+  KenPom individual: 8810 rows
+  Barttorvik individual: 4387 rows
+
+[3/10] Elo (fixed): K=40, home=64, carry=0.65
+  Computing Bradley-Terry strengths...
+  BT: 13753 M ratings, 9851 W ratings
+
+[4/10] Computing efficiency...
+  Men: (8346, 16), Women: (5965, 16)
+
+[5/10] Seeds + Massey...
+  Massey Men: (8356, 8)
+
+[6/10] Building team features...
+  Men: (13753, 35), Women: (9851, 19)
+
+[7/10] Building matchup data...
+  Adding historical seed matchup win rates (leak-free)...
+  SeedHistWR: mean=0.5044, std=0.2854
+  Adding gender-specific SeedHistWR...
+    SeedHistWR_M: mean=0.5067
+    SeedHistWR_W: mean=0.4971
+  Training: (4302, 41), Features (37): ['BT_ADJDE_diff', 'BT_ADJOE_diff', 'BT_ADJ_T_diff', 'BT_BARTHAG_diff', 'BT_EFG_D_diff', 'BT_EFG_O_diff', 'BT_Strength_diff', 'BT_WAB_diff', 'DefEff_Std_diff', 'DefEff_diff']...
+
+[8/10] Optuna CatBoost tuning (25 trials)...
+  Best Brier: 0.15865
+
+[9/10] Temporal CV (Brier, last 10 seasons)...
+  2015 | n=130 | LGB=0.13669 | XGB=0.14599 | CB=0.14014 | LR=0.13029
+  2016 | n=130 | LGB=0.20543 | XGB=0.19382 | CB=0.17709 | LR=0.16796
+  2017 | n=130 | LGB=0.17230 | XGB=0.18047 | CB=0.16210 | LR=0.16187
+  2018 | n=130 | LGB=0.19940 | XGB=0.19022 | CB=0.16792 | LR=0.17732
+  2019 | n=130 | LGB=0.15282 | XGB=0.15301 | CB=0.13929 | LR=0.13826
+  2021 | n=129 | LGB=0.18780 | XGB=0.18699 | CB=0.17097 | LR=0.17641
+  2022 | n=134 | LGB=0.18728 | XGB=0.19278 | CB=0.16963 | LR=0.16770
+  2023 | n=134 | LGB=0.20604 | XGB=0.21203 | CB=0.18359 | LR=0.18153
+  2024 | n=134 | LGB=0.16521 | XGB=0.17966 | CB=0.15415 | LR=0.15466
+  2025 | n=134 | LGB=0.11786 | XGB=0.10893 | CB=0.12159 | LR=0.12183
+
+  LGB: 0.17308 | XGB: 0.17439 | CB: 0.15865 | LR: 0.15778
+  HC Brier: 0.15578 | Weights: {'lgb': 0.0, 'xgb': 0.0, 'cb': 0.456, 'lr': 0.544}
+
+  Top features:
+    RecordWinPct_diff                          831
+    Elo_diff                                   770
+    BT_Strength_diff                           676
+    SeedHistWR                                 635
+    KP_AdjDE_diff                              477
+    FTRate_diff                                453
+    DefEff_Std_diff                            442
+    Margin_Std_diff                            440
+    HomeCourtDep_diff                          439
+    OffEff_Std_diff                            396
+
+[10/10] Generating submissions...
+
+  stage1...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage1_exp_078_bradley_terry.csv | mean=0.5038, std=0.2775
+
+  stage2...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage2_exp_078_bradley_terry.csv | mean=0.5151, std=0.2347
+
+============================================================
+DONE in 773s | CV Brier: 0.15578 | Features: 37
+============================================================

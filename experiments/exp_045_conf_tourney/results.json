@@ -1,0 +1,120 @@
+{
+  "id": "exp_045_conf_tourney",
+  "status": "completed",
+  "elapsed_seconds": 447,
+  "cv_brier": {
+    "lgb": 0.17715,
+    "xgb": 0.1767,
+    "cb": 0.15932,
+    "ensemble_hc": 0.15663
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.0,
+    "cb": 0.477,
+    "lr": 0.523
+  },
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "cb_optuna_params": {
+    "learning_rate": 0.0273,
+    "depth": 5,
+    "l2_leaf_reg": 19.2828,
+    "iterations": 236,
+    "min_data_in_leaf": 37,
+    "random_strength": 0.194,
+    "bagging_temperature": 0.0438,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss"
+  },
+  "n_features": 31,
+  "feature_importance_top20": [
+    [
+      "SeedHistWR",
+      948
+    ],
+    [
+      "RecordWinPct_diff",
+      939
+    ],
+    [
+      "Elo_diff",
+      897
+    ],
+    [
+      "FTRate_diff",
+      598
+    ],
+    [
+      "KP_AdjDE_diff",
+      578
+    ],
+    [
+      "ORBRate_diff",
+      535
+    ],
+    [
+      "TORate_diff",
+      520
+    ],
+    [
+      "DefEff_diff",
+      492
+    ],
+    [
+      "OffEff_diff",
+      472
+    ],
+    [
+      "eFG_diff",
+      472
+    ],
+    [
+      "KP_AdjOE_diff",
+      410
+    ],
+    [
+      "NetEff_diff",
+      409
+    ],
+    [
+      "SeedNum_diff",
+      394
+    ],
+    [
+      "KP_AdjTempo_diff",
+      352
+    ],
+    [
+      "MasseyStd_diff",
+      301
+    ],
+    [
+      "KP_AdjEM_diff",
+      256
+    ],
+    [
+      "WinPct_diff",
+      247
+    ],
+    [
+      "ConfTourneyWR_diff",
+      235
+    ],
+    [
+      "MasseyMin_diff",
+      221
+    ],
+    [
+      "MasseyMean_diff",
+      177
+    ]
+  ],
+  "clip_range": [
+    0.02,
+    0.98
+  ]
+}

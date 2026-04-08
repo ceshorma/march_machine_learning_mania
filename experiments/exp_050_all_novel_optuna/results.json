@@ -1,0 +1,120 @@
+{
+  "id": "exp_050_all_novel_optuna",
+  "status": "completed",
+  "elapsed_seconds": 935,
+  "cv_brier": {
+    "lgb": 0.17872,
+    "xgb": 0.1744,
+    "cb": 0.15831,
+    "ensemble_hc": 0.15605
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.0,
+    "cb": 0.536,
+    "lr": 0.464
+  },
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "cb_optuna_params": {
+    "learning_rate": 0.0216,
+    "depth": 3,
+    "l2_leaf_reg": 14.9472,
+    "iterations": 595,
+    "min_data_in_leaf": 10,
+    "random_strength": 0.3266,
+    "bagging_temperature": 0.7318,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss"
+  },
+  "n_features": 37,
+  "feature_importance_top20": [
+    [
+      "RecordWinPct_diff",
+      834
+    ],
+    [
+      "SeedHistWR",
+      831
+    ],
+    [
+      "Elo_diff",
+      802
+    ],
+    [
+      "KP_AdjDE_diff",
+      496
+    ],
+    [
+      "HomeCourtDep_diff",
+      442
+    ],
+    [
+      "FTRate_diff",
+      437
+    ],
+    [
+      "DefEff_Std_diff",
+      432
+    ],
+    [
+      "Margin_Std_diff",
+      420
+    ],
+    [
+      "ORBRate_diff",
+      401
+    ],
+    [
+      "OffEff_Std_diff",
+      393
+    ],
+    [
+      "BlockRate_diff",
+      381
+    ],
+    [
+      "KP_AdjOE_diff",
+      380
+    ],
+    [
+      "StealRate_diff",
+      377
+    ],
+    [
+      "KP_AdjTempo_diff",
+      369
+    ],
+    [
+      "OffEff_diff",
+      369
+    ],
+    [
+      "AstToTO_diff",
+      365
+    ],
+    [
+      "SeedNum_diff",
+      350
+    ],
+    [
+      "TORate_diff",
+      332
+    ],
+    [
+      "DefEff_diff",
+      322
+    ],
+    [
+      "NeutralWR_diff",
+      313
+    ]
+  ],
+  "clip_range": [
+    0.02,
+    0.98
+  ]
+}

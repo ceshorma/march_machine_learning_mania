@@ -1,0 +1,120 @@
+{
+  "id": "exp_084_experience_only",
+  "status": "completed",
+  "elapsed_seconds": 759,
+  "cv_brier": {
+    "lgb": 0.1739,
+    "xgb": 0.17283,
+    "cb": 0.1586,
+    "ensemble_hc": 0.15621
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.0,
+    "cb": 0.514,
+    "lr": 0.486
+  },
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "cb_optuna_params": {
+    "learning_rate": 0.0231,
+    "depth": 4,
+    "l2_leaf_reg": 8.1365,
+    "iterations": 433,
+    "min_data_in_leaf": 11,
+    "random_strength": 0.3591,
+    "bagging_temperature": 1.6154,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss"
+  },
+  "n_features": 37,
+  "feature_importance_top20": [
+    [
+      "Elo_diff",
+      832
+    ],
+    [
+      "RecordWinPct_diff",
+      777
+    ],
+    [
+      "SeedHistWR",
+      656
+    ],
+    [
+      "KP_AdjDE_diff",
+      495
+    ],
+    [
+      "HomeCourtDep_diff",
+      472
+    ],
+    [
+      "DefEff_Std_diff",
+      464
+    ],
+    [
+      "FTRate_diff",
+      458
+    ],
+    [
+      "OffEff_Std_diff",
+      416
+    ],
+    [
+      "Margin_Std_diff",
+      398
+    ],
+    [
+      "OffEff_diff",
+      396
+    ],
+    [
+      "ORBRate_diff",
+      392
+    ],
+    [
+      "KP_AdjOE_diff",
+      380
+    ],
+    [
+      "TORate_diff",
+      367
+    ],
+    [
+      "NeutralWR_diff",
+      363
+    ],
+    [
+      "DefEff_diff",
+      338
+    ],
+    [
+      "KP_AdjTempo_diff",
+      323
+    ],
+    [
+      "eFG_diff",
+      320
+    ],
+    [
+      "SeedNum_diff",
+      309
+    ],
+    [
+      "SeedHistWR_M",
+      307
+    ],
+    [
+      "NetEff_diff",
+      278
+    ]
+  ],
+  "clip_range": [
+    0.02,
+    0.98
+  ]
+}

@@ -1,0 +1,119 @@
+{
+  "id": "exp_008_no_barttorvik",
+  "status": "completed",
+  "elapsed_seconds": 593,
+  "cv_brier": {
+    "lgb": 0.17627,
+    "xgb": 0.17183,
+    "cb": 0.15932,
+    "ensemble_hc": 0.15927
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.011,
+    "cb": 0.989
+  },
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "cb_optuna_params": {
+    "learning_rate": 0.0273,
+    "depth": 5,
+    "l2_leaf_reg": 2.6971,
+    "iterations": 354,
+    "min_data_in_leaf": 30,
+    "random_strength": 0.9418,
+    "bagging_temperature": 1.3331,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss"
+  },
+  "n_features": 21,
+  "feature_importance_top20": [
+    [
+      "Elo_diff",
+      1275
+    ],
+    [
+      "RecordWinPct_diff",
+      1039
+    ],
+    [
+      "FTRate_diff",
+      816
+    ],
+    [
+      "KP_AdjDE_diff",
+      667
+    ],
+    [
+      "OffEff_diff",
+      637
+    ],
+    [
+      "DefEff_diff",
+      629
+    ],
+    [
+      "ORBRate_diff",
+      629
+    ],
+    [
+      "eFG_diff",
+      621
+    ],
+    [
+      "TORate_diff",
+      587
+    ],
+    [
+      "SeedNum_diff",
+      545
+    ],
+    [
+      "NetEff_diff",
+      540
+    ],
+    [
+      "KP_AdjOE_diff",
+      515
+    ],
+    [
+      "KP_AdjTempo_diff",
+      472
+    ],
+    [
+      "MasseyStd_diff",
+      424
+    ],
+    [
+      "WinPct_diff",
+      370
+    ],
+    [
+      "MasseyMin_diff",
+      309
+    ],
+    [
+      "KP_AdjEM_diff",
+      300
+    ],
+    [
+      "MasseyMean_diff",
+      218
+    ],
+    [
+      "MasseyMax_diff",
+      177
+    ],
+    [
+      "MasseyMedian_diff",
+      165
+    ]
+  ],
+  "clip_range": [
+    0.02,
+    0.98
+  ]
+}

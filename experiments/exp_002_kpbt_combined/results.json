@@ -1,0 +1,119 @@
+{
+  "id": "exp_002_kpbt_combined",
+  "status": "completed",
+  "elapsed_seconds": 841,
+  "cv_brier": {
+    "lgb": 0.18345,
+    "xgb": 0.18497,
+    "cb": 0.16792,
+    "ensemble_hc": 0.16786
+  },
+  "hc_weights": {
+    "lgb": 0.0,
+    "xgb": 0.0,
+    "cb": 1.0
+  },
+  "elo_params": {
+    "k": 40,
+    "home_adv": 64,
+    "carryover": 0.65
+  },
+  "cb_optuna_params": {
+    "learning_rate": 0.0273,
+    "depth": 5,
+    "l2_leaf_reg": 2.6971,
+    "iterations": 354,
+    "min_data_in_leaf": 30,
+    "random_strength": 0.9418,
+    "bagging_temperature": 1.3331,
+    "loss_function": "Logloss",
+    "eval_metric": "Logloss"
+  },
+  "n_features": 49,
+  "feature_importance_top20": [
+    [
+      "Elo_diff",
+      1461
+    ],
+    [
+      "RecordWinPct_diff",
+      1193
+    ],
+    [
+      "eFG_diff",
+      929
+    ],
+    [
+      "FTRate_diff",
+      927
+    ],
+    [
+      "DefEff_diff",
+      832
+    ],
+    [
+      "TORate_diff",
+      793
+    ],
+    [
+      "ORBRate_diff",
+      774
+    ],
+    [
+      "OffEff_diff",
+      700
+    ],
+    [
+      "NetEff_diff",
+      683
+    ],
+    [
+      "SeedNum_diff",
+      593
+    ],
+    [
+      "MasseyStd_diff",
+      475
+    ],
+    [
+      "MasseyMin_diff",
+      375
+    ],
+    [
+      "WinPct_diff",
+      372
+    ],
+    [
+      "MasseyMax_diff",
+      282
+    ],
+    [
+      "MasseyMean_diff",
+      261
+    ],
+    [
+      "MasseyMedian_diff",
+      234
+    ],
+    [
+      "is_mens",
+      121
+    ],
+    [
+      "KPBT_2PTpctD_diff",
+      0
+    ],
+    [
+      "KPBT_2PTpct_diff",
+      0
+    ],
+    [
+      "KPBT_3PTpctD_diff",
+      0
+    ]
+  ],
+  "clip_range": [
+    0.02,
+    0.98
+  ]
+}

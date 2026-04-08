@@ -1,0 +1,87 @@
+============================================================
+EXPERIMENT: exp_010_separate_mw
+Hypothesis: Train separate models for Men and Women â€” Women's basketball is more seed-driven
+Parent: exp_000_v3b_baseline
+============================================================
+
+[1/10] Loading Kaggle data...
+  Men: 196,823 reg + 2,585 tourney | Women: 140,825 reg + 1,717 tourney
+
+[2/10] Loading external data...
+  KenPom individual: 8810 rows
+  Barttorvik individual: 4387 rows
+
+[3/10] Elo (fixed): K=40, home=64, carry=0.65
+
+[4/10] Computing efficiency...
+  Men: (8346, 11), Women: (5965, 11)
+
+[5/10] Seeds + Massey...
+  Massey Men: (8356, 8)
+
+[6/10] Building team features...
+  Men: (13753, 29), Women: (9851, 13)
+
+[7/10] Building matchup data...
+  Training: (4302, 32), Features (28): ['BT_ADJDE_diff', 'BT_ADJOE_diff', 'BT_ADJ_T_diff', 'BT_BARTHAG_diff', 'BT_EFG_D_diff', 'BT_EFG_O_diff', 'BT_WAB_diff', 'DefEff_diff', 'Elo_diff', 'FTRate_diff']...
+
+[8/10] Reusing CatBoost params from exp_000_v3b_baseline
+
+[9/10] Temporal CV — SEPARATE M/W models (Brier, last 10 seasons)...
+  2015 | n=130 | LGB=0.13832 | XGB=0.13776 | CB=0.13577
+  2016 | n=130 | LGB=0.19319 | XGB=0.17790 | CB=0.17771
+  2017 | n=130 | LGB=0.18860 | XGB=0.19071 | CB=0.17235
+  2018 | n=130 | LGB=0.20031 | XGB=0.19471 | CB=0.18039
+  2019 | n=130 | LGB=0.16128 | XGB=0.14994 | CB=0.13866
+  2021 | n=129 | LGB=0.18202 | XGB=0.17965 | CB=0.18353
+  2022 | n=134 | LGB=0.20087 | XGB=0.20188 | CB=0.18106
+  2023 | n=134 | LGB=0.21523 | XGB=0.20700 | CB=0.18468
+  2024 | n=134 | LGB=0.18712 | XGB=0.18414 | CB=0.15550
+  2025 | n=134 | LGB=0.11501 | XGB=0.11660 | CB=0.12174
+
+  LGB: 0.17819 | XGB: 0.17403 | CB: 0.16314
+  HC Brier: 0.16297 | Weights: {'lgb': 0.0, 'xgb': 0.098, 'cb': 0.902}
+
+  Top features:
+    Elo_diff                                  1078
+    RecordWinPct_diff                          927
+    FTRate_diff                                674
+    KP_AdjDE_diff                              625
+    ORBRate_diff                               587
+    DefEff_diff                                566
+    eFG_diff                                   527
+    TORate_diff                                522
+    KP_AdjOE_diff                              492
+    OffEff_diff                                471
+
+[10/10] Generating submissions...
+
+  stage1...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage1_exp_010_separate_mw.csv | mean=0.4841, std=0.3160
+
+  stage2...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage2_exp_010_separate_mw.csv | mean=0.4749, std=0.2868
+
+============================================================
+DONE in 1286s | CV Brier: 0.16297 | Features: 28
+============================================================

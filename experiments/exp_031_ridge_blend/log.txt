@@ -1,0 +1,89 @@
+============================================================
+EXPERIMENT: exp_031_ridge_blend
+Hypothesis: Add Ridge regression as 5th model â€” L2-regularized linear regression on binary targets provides different predictions than LR (logistic). More model diversity in ensemble.
+Parent: exp_025_lr_blend
+============================================================
+
+[1/10] Loading Kaggle data...
+  Men: 198,079 reg + 2,585 tourney | Women: 142,093 reg + 1,717 tourney
+
+[2/10] Loading external data...
+  KenPom individual: 8810 rows
+  Barttorvik individual: 4387 rows
+
+[3/10] Elo (fixed): K=40, home=64, carry=0.65
+
+[4/10] Computing efficiency...
+  Men: (8346, 11), Women: (5965, 11)
+
+[5/10] Seeds + Massey...
+  Massey Men: (8356, 8)
+
+[6/10] Building team features...
+  Men: (13753, 29), Women: (9851, 13)
+
+[7/10] Building matchup data...
+  Adding historical seed matchup win rates (leak-free)...
+  SeedHistWR: mean=0.5044, std=0.2854
+  Training: (4302, 33), Features (29): ['BT_ADJDE_diff', 'BT_ADJOE_diff', 'BT_ADJ_T_diff', 'BT_BARTHAG_diff', 'BT_EFG_D_diff', 'BT_EFG_O_diff', 'BT_WAB_diff', 'DefEff_diff', 'Elo_diff', 'FTRate_diff']...
+
+[8/10] Reusing CatBoost params from exp_017_seed_wr_optuna
+
+[9/10] Temporal CV (Brier, last 10 seasons)...
+  2015 | n=130 | LGB=0.15002 | XGB=0.14585 | CB=0.13787 | LR=0.13373 | Ridge=0.13716
+  2016 | n=130 | LGB=0.19317 | XGB=0.20432 | CB=0.18048 | LR=0.16768 | Ridge=0.16851
+  2017 | n=130 | LGB=0.17753 | XGB=0.17222 | CB=0.16041 | LR=0.16285 | Ridge=0.15836
+  2018 | n=130 | LGB=0.19912 | XGB=0.19306 | CB=0.17150 | LR=0.18044 | Ridge=0.17315
+  2019 | n=130 | LGB=0.16071 | XGB=0.15360 | CB=0.13788 | LR=0.13995 | Ridge=0.14326
+  2021 | n=129 | LGB=0.17956 | XGB=0.18324 | CB=0.16481 | LR=0.16949 | Ridge=0.17332
+  2022 | n=134 | LGB=0.18875 | XGB=0.19346 | CB=0.16615 | LR=0.17001 | Ridge=0.17643
+  2023 | n=134 | LGB=0.20402 | XGB=0.21231 | CB=0.18330 | LR=0.17593 | Ridge=0.17948
+  2024 | n=134 | LGB=0.16511 | XGB=0.16836 | CB=0.15286 | LR=0.15589 | Ridge=0.16311
+  2025 | n=134 | LGB=0.12414 | XGB=0.12113 | CB=0.12627 | LR=0.12793 | Ridge=0.13518
+
+  LGB: 0.17421 | XGB: 0.17475 | CB: 0.15815 | LR: 0.15839 | Ridge: 0.16079
+  HC Brier: 0.15592 | Weights: {'lgb': 0.0, 'xgb': 0.0, 'cb': 0.511, 'lr': 0.489, 'ridge': 0.0}
+
+  Top features:
+    Elo_diff                                   970
+    RecordWinPct_diff                          936
+    SeedHistWR                                 866
+    KP_AdjDE_diff                              625
+    FTRate_diff                                621
+    ORBRate_diff                               552
+    DefEff_diff                                505
+    OffEff_diff                                502
+    TORate_diff                                476
+    NetEff_diff                                469
+
+[10/10] Generating submissions...
+
+  stage1...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage1_exp_031_ridge_blend.csv | mean=0.5006, std=0.2650
+
+  stage2...
+    Seed 42 done
+    Seed 2024 done
+    Seed 2025 done
+    Seed 1234 done
+    Seed 5678 done
+    Seed 7890 done
+    Seed 3141 done
+    Seed 2718 done
+    Seed 1618 done
+    Seed 4242 done
+  Saved: C:\Users\Admin\Desktop\Proyectos\Analisis Datos\[Kaggle] March Machine Learning Mania 2026\submissions\submission_stage2_exp_031_ridge_blend.csv | mean=0.5080, std=0.2271
+
+============================================================
+DONE in 455s | CV Brier: 0.15592 | Features: 29
+============================================================

@@ -1,0 +1,19 @@
+{
+  "project": {
+    "name": "march-madness-automl-skeleton",
+    "objective": "Generate and track iterative experiment proposals for NCAA tournament prediction",
+    "metric": "cv_brier",
+    "metric_mode": "min"
+  },
+  "summary": {
+    "metric": "cv_brier",
+    "metric_mode": "min",
+    "best_metric": null,
+    "best_experiment_id": null,
+    "total_experiments": 0,
+    "path_attempts": {},
+    "promoted_paths": [],
+    "abandoned_paths": []
+  },
+  "experiments": []
+}

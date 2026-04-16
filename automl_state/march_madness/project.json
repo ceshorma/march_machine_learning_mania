@@ -1,0 +1,28 @@
+{
+  "name": "march-madness-automl-skeleton",
+  "objective": "Generate and track iterative experiment proposals for NCAA tournament prediction",
+  "metric": "cv_brier",
+  "metric_mode": "min",
+  "dataset": {
+    "train_assets": [
+      "data/*.csv",
+      "experiments/exp_*/config.json"
+    ],
+    "task_type": "binary_classification",
+    "target": "TeamID1 wins"
+  },
+  "splitter": {
+    "type": "temporal_tournament_cv",
+    "eval_seasons": 10
+  },
+  "paths": {
+    "repo_root": "/home/runner/work/march_machine_learning_mania/march_machine_learning_mania",
+    "legacy_runner": "/home/runner/work/march_machine_learning_mania/march_machine_learning_mania/notebooks/run_experiment.py",
+    "legacy_registry": "/home/runner/work/march_machine_learning_mania/march_machine_learning_mania/experiments/registry.json",
+    "framework_state": "/home/runner/work/march_machine_learning_mania/march_machine_learning_mania/automl_state/march_madness"
+  },
+  "metadata": {
+    "adapter": "march_madness",
+    "legacy_best_config": "experiments/exp_056_gender_hc_consist/config.json"
+  }
+}

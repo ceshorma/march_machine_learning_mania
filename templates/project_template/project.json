@@ -1,0 +1,18 @@
+{
+  "name": "automl-template",
+  "objective": "replace with your supervised learning objective",
+  "metric": "cv_score",
+  "metric_mode": "min",
+  "dataset": {
+    "train_path": "data/train.csv",
+    "target": "target"
+  },
+  "splitter": {
+    "type": "temporal",
+    "min_train_periods": 5
+  },
+  "paths": {
+    "framework_state": "./framework_state"
+  },
+  "metadata": {}
+}

@@ -1,0 +1,24 @@
+{
+  "name": "march-madness-automl-skeleton",
+  "objective": "Generate and track iterative experiment proposals for NCAA tournament prediction",
+  "metric": "cv_brier",
+  "metric_mode": "min",
+  "dataset": {
+    "train_assets": [
+      "data/*.csv",
+      "experiments/exp_*/config.json"
+    ],
+    "task_type": "binary_classification",
+    "target": "TeamID1 wins"
+  },
+  "splitter": {
+    "type": "temporal_tournament_cv",
+    "eval_seasons": 10
+  },
+  "paths": {
+    "framework_state": "automl_state/march_madness"
+  },
+  "metadata": {
+    "adapter": "march_madness"
+  }
+}

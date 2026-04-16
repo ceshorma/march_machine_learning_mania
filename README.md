@@ -24,6 +24,49 @@ En lugar de hacer pruebas manuales aisladas, este repositorio está organizado p
 
 La filosofía fue **hypothesis-first**: antes de tunear modelos, probar ideas de dominio sobre March Madness (seed history, neutral court dependency, consistency, travel, shooting profile, etc.).
 
+## Nuevo: esqueleto genérico de AutoML
+
+Este repositorio ahora también incluye un **framework reutilizable** para convertir este lab de March Madness en la base de otros proyectos de experimentación iterativa.
+
+### Dónde está
+
+- `automl_framework/` → core genérico del framework
+- `examples/march_madness/` → adapter de ejemplo que conecta el framework con este repo
+- `automl_state/march_madness/` → estado inicial del framework (project, backlog, registry)
+- `templates/` → plantilla mínima para crear nuevos proyectos/datasets
+
+### Qué resuelve
+
+- separación entre lógica genérica y lógica de dominio
+- registries para features, modelos y transformaciones
+- entidad formal de hipótesis
+- proposals con lineage parent-child
+- registro estructurado de experimentos
+- reglas simples de exploración para promover paths ganadores y cortar paths sin señal
+- reporte automático del estado del sistema
+
+### Uso rápido
+
+Crear una propuesta nueva para este repositorio:
+
+```bash
+python -m automl_framework.cli march-madness-proposal --repo-root /home/runner/work/march_machine_learning_mania/march_machine_learning_mania
+```
+
+Generar el reporte del framework:
+
+```bash
+python -m automl_framework.cli march-madness-report --repo-root /home/runner/work/march_machine_learning_mania/march_machine_learning_mania
+```
+
+Crear una plantilla genérica para otro proyecto:
+
+```bash
+python -m automl_framework.cli bootstrap-template /ruta/al/nuevo/framework_state
+```
+
+El runner histórico en `notebooks/run_experiment.py` se mantiene como implementación legacy / adapter real del caso March Madness.
+
 ## Qué contiene
 
 - **Pipeline modular de experimentos** en `notebooks/run_experiment.py`

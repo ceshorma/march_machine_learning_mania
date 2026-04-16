@@ -1,0 +1,80 @@
+{
+  "hypotheses": [
+    {
+      "id": "travel_signal",
+      "title": "Travel distance signal",
+      "description": "Probe whether travel and timezone distance add orthogonal signal beyond Elo and seeds.",
+      "change_kind": "feature",
+      "priority": 95,
+      "path_key": "feature:travel",
+      "dependencies": [],
+      "success_criteria": {
+        "metric": "cv_brier",
+        "direction": "decrease"
+      },
+      "status": "pending",
+      "tags": [
+        "domain",
+        "feature"
+      ],
+      "metadata": {}
+    },
+    {
+      "id": "rest_signal",
+      "title": "Rest-days signal",
+      "description": "Test whether conference-tournament rest improves matchup calibration.",
+      "change_kind": "feature",
+      "priority": 90,
+      "path_key": "feature:rest",
+      "dependencies": [],
+      "success_criteria": {
+        "metric": "cv_brier",
+        "direction": "decrease"
+      },
+      "status": "pending",
+      "tags": [
+        "domain",
+        "feature"
+      ],
+      "metadata": {}
+    },
+    {
+      "id": "blend_regularizer",
+      "title": "Linear blend regularization",
+      "description": "Stress a lighter linear blend to see if the ensemble can improve calibration with one controlled model change.",
+      "change_kind": "model",
+      "priority": 70,
+      "path_key": "model:blend",
+      "dependencies": [],
+      "success_criteria": {
+        "metric": "cv_brier",
+        "direction": "decrease"
+      },
+      "status": "pending",
+      "tags": [
+        "model",
+        "blend"
+      ],
+      "metadata": {}
+    },
+    {
+      "id": "clip_relaxation",
+      "title": "Prediction clip relaxation",
+      "description": "Use a slightly wider clip to validate whether the current calibration bounds are still optimal.",
+      "change_kind": "transform",
+      "priority": 50,
+      "path_key": "transform:clip",
+      "dependencies": [],
+      "success_criteria": {
+        "metric": "cv_brier",
+        "direction": "decrease"
+      },
+      "status": "pending",
+      "tags": [
+        "calibration",
+        "transform"
+      ],
+      "metadata": {}
+    }
+  ]
+}

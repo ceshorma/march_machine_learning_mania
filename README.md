@@ -50,19 +50,19 @@ Este repositorio ahora también incluye un **framework reutilizable** para conve
 Crear una propuesta nueva para este repositorio:
 
 ```bash
-python -m automl_framework.cli march-madness-proposal --repo-root /home/runner/work/march_machine_learning_mania/march_machine_learning_mania
+python -m automl_framework.cli march-madness-proposal --repo-root /ruta/al/repositorio
 ```
 
 Generar el reporte del framework:
 
 ```bash
-python -m automl_framework.cli march-madness-report --repo-root /home/runner/work/march_machine_learning_mania/march_machine_learning_mania
+python -m automl_framework.cli march-madness-report --repo-root /ruta/al/repositorio
 ```
 
 Inspeccionar la arquitectura operativa y la frontera exacta entre core y adapter:
 
 ```bash
-python -m automl_framework.cli march-madness-architecture --repo-root /home/runner/work/march_machine_learning_mania/march_machine_learning_mania
+python -m automl_framework.cli march-madness-architecture --repo-root /ruta/al/repositorio
 ```
 
 Crear una plantilla genérica para otro proyecto:

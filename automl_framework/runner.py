@@ -45,7 +45,7 @@ class ProjectAdapter(ABC):
         state_path = project.paths.get('framework_state')
         if state_path:
             return Path(state_path)
-        raise ValueError('ProjectSpec.paths.framework_state is required')
+        raise ValueError("ProjectSpec.paths['framework_state'] is required")
 
 
 class AutoMLRunner:

@@ -64,7 +64,7 @@ def main() -> None:
 
     architecture = subparsers.add_parser(
         'march-madness-architecture',
-        help='Describe the current core/adaptor split for this repository',
+        help='Describe the current core/adapter split for this repository',
     )
     architecture.add_argument('--repo-root', type=Path, required=True)
 

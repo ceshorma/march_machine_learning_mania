@@ -4,6 +4,7 @@ import argparse
 import json
 from pathlib import Path
 
+from automl_framework.architecture import build_architecture_report
 from automl_framework.models import ProjectSpec
 from automl_framework.runner import AutoMLRunner
 from examples.march_madness.adapter import MarchMadnessAdapter
@@ -13,8 +14,8 @@ def default_registry_payload(project: ProjectSpec) -> dict:
     return {
         "project": project.to_dict(),
         "summary": {
-            "metric": "cv_score",
-            "metric_mode": "min",
+            "metric": project.metric,
+            "metric_mode": project.metric_mode,
             "best_metric": None,
             "best_experiment_id": None,
             "total_experiments": 0,
@@ -61,6 +62,12 @@ def main() -> None:
     report = subparsers.add_parser('march-madness-report', help='Build the latest framework report for this repository')
     report.add_argument('--repo-root', type=Path, required=True)
 
+    architecture = subparsers.add_parser(
+        'march-madness-architecture',
+        help='Describe the current core/adaptor split for this repository',
+    )
+    architecture.add_argument('--repo-root', type=Path, required=True)
+
     args = parser.parse_args()
     if args.command == 'bootstrap-template':
         bootstrap_generic(args.target)
@@ -79,6 +86,8 @@ def main() -> None:
             print(payload)
     elif args.command == 'march-madness-report':
         print(runner.build_report())
+    elif args.command == 'march-madness-architecture':
+        print(build_architecture_report(adapter))
 
 
 if __name__ == '__main__':

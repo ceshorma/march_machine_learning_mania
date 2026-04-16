@@ -59,6 +59,12 @@ Generar el reporte del framework:
 python -m automl_framework.cli march-madness-report --repo-root /home/runner/work/march_machine_learning_mania/march_machine_learning_mania
 ```
 
+Inspeccionar la arquitectura operativa y la frontera exacta entre core y adapter:
+
+```bash
+python -m automl_framework.cli march-madness-architecture --repo-root /home/runner/work/march_machine_learning_mania/march_machine_learning_mania
+```
+
 Crear una plantilla genérica para otro proyecto:
 
 ```bash
@@ -66,6 +72,40 @@ python -m automl_framework.cli bootstrap-template /ruta/al/nuevo/framework_state
 ```
 
 El runner histórico en `notebooks/run_experiment.py` se mantiene como implementación legacy / adapter real del caso March Madness.
+
+### Frontera exacta entre core y adapter
+
+- **Core (`automl_framework/`)**
+  - contratos (`ProjectSpec`, `Hypothesis`, `ConfigChange`, `ExperimentProposal`, `ExperimentResult`)
+  - registries de plugins
+  - policy de exploración
+  - generador de propuestas
+  - experiment registry y reporting
+  - CLI reusable
+
+- **Adapter (`examples/march_madness/adapter.py`)**
+  - define objetivo, métrica y rutas del proyecto
+  - elige el baseline real
+  - traduce hipótesis de basketball a cambios sobre la config legacy
+  - registra features/modelos/transforms disponibles para este dominio
+
+- **March Madness legacy sigue fuera del core**
+  - `notebooks/run_experiment.py`
+  - `experiments/registry.json`
+  - datos NCAA/Kaggle y features específicas
+
+### Estructura operativa
+
+```text
+.
+├── automl_framework/            # Core reusable
+├── examples/march_madness/      # Adapter del dominio March Madness
+├── automl_state/march_madness/  # Estado del framework incubado en este repo
+├── templates/                   # Plantillas para abrir proyectos nuevos
+└── notebooks/run_experiment.py  # Runner legacy real del caso NCAA
+```
+
+La idea es que **este repo siga siendo la incubadora + example project**, mientras el framework reusable madura dentro de `automl_framework/`. Cuando esta frontera ya no cambie mucho, entonces sí conviene extraer un repo nuevo.
 
 ## Qué contiene
 

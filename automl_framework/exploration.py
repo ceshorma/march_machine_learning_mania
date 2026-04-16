@@ -28,7 +28,10 @@ class ExplorationPolicy:
 
     def validate_proposal(self, proposal: ExperimentProposal) -> None:
         if self.require_single_change and len(proposal.changes) != 1:
-            raise ValueError("Exploration policy requires exactly one controlled change per experiment")
+            raise ValueError(
+                f"Proposal {proposal.id!r} violates single-change policy: "
+                f"expected 1 change, found {len(proposal.changes)}"
+            )
 
     def mark_improvement(self, result: ExperimentResult, registry: ExperimentRegistry) -> bool:
         metric_name = registry.metric

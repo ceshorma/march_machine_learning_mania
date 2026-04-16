@@ -82,19 +82,21 @@ class ExperimentRegistry:
     def record(self, result: ExperimentResult) -> dict[str, Any]:
         metric_name = self.metric
         result_dict = result.to_dict()
-            existing = any(exp.get("experiment_id") == result.experiment_id for exp in self.data.get("experiments", []))
-            experiments = [exp for exp in self.data.get("experiments", []) if exp.get("experiment_id") != result.experiment_id]
-            experiments.append(result_dict)
-            experiments.sort(key=lambda item: item.get("created_at", ""))
-            self.data["experiments"] = experiments
-            self.data["summary"]["total_experiments"] = len(experiments)
+        existing = any(exp.get("experiment_id") == result.experiment_id for exp in self.data.get("experiments", []))
+        experiments = [exp for exp in self.data.get("experiments", []) if exp.get("experiment_id") != result.experiment_id]
+        experiments.append(result_dict)
+        experiments.sort(key=lambda item: item.get("created_at", ""))
+        self.data["experiments"] = experiments
+        self.data["summary"]["total_experiments"] = len(experiments)
 
-            attempts = self.data["summary"].setdefault("path_attempts", {})
-            if not existing:
-                attempts[result.path_key] = attempts.get(result.path_key, 0) + 1
+        attempts = self.data["summary"].setdefault("path_attempts", {})
+        if not existing:
+            attempts[result.path_key] = attempts.get(result.path_key, 0) + 1
+        else:
+            attempts.setdefault(result.path_key, 0)
 
-            if result.improved and result.path_key not in self.data["summary"].setdefault("promoted_paths", []):
-                self.data["summary"]["promoted_paths"].append(result.path_key)
+        if result.improved and result.path_key not in self.data["summary"].setdefault("promoted_paths", []):
+            self.data["summary"]["promoted_paths"].append(result.path_key)
         if not result.improved and attempts[result.path_key] >= 2 and not self.path_has_improvement(result.path_key):
             abandoned = self.data["summary"].setdefault("abandoned_paths", [])
             if result.path_key not in abandoned:

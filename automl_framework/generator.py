@@ -24,7 +24,10 @@ def apply_change(config: dict[str, Any], change: ConfigChange) -> dict[str, Any]
     elif change.change_type == 'merge':
         existing = cursor.get(leaf, {})
         if not isinstance(existing, dict) or not isinstance(change.value, dict):
-            raise ValueError('merge changes require dict values')
+            raise ValueError(
+                "merge changes require dict values; "
+                f"got existing={type(existing).__name__}, value={type(change.value).__name__}"
+            )
         merged = dict(existing)
         merged.update(change.value)
         cursor[leaf] = merged
@@ -52,6 +55,9 @@ class ExperimentGenerator:
                     continue
                 experiment_id = f"{prefix}_{registry.next_experiment_number():03d}_{self._slug(hypothesis.title)}"
                 config = apply_change(baseline_config, change)
+                config["id"] = experiment_id
+                if base_config_id is not None:
+                    config["parent"] = base_config_id
                 proposal = ExperimentProposal(
                     id=experiment_id,
                     parent_id=registry.best_experiment_id() or base_config_id,
@@ -65,7 +71,11 @@ class ExperimentGenerator:
                 )
                 self.policy.validate_proposal(proposal)
                 return proposal
-        raise ValueError('No experiment proposal available with the current policy and mutation space')
+        ranked = self.policy.rank_hypotheses(hypotheses, registry)
+        raise ValueError(
+            "No experiment proposal available with the current policy and mutation space "
+            f"(ranked_hypotheses={len(ranked)}, mutation_sets={len(mutation_space)})"
+        )
 
     def _is_noop(self, config: dict[str, Any], change: ConfigChange) -> bool:
         cursor: Any = config

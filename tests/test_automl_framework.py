@@ -9,7 +9,7 @@ from automl_framework.models import ConfigChange, ExperimentResult, Hypothesis, 
 from automl_framework.registry import ExperimentRegistry
 
 
-class AutoMLFrameworkTests(unittest.TestCase):
+class FrameworkCoreTests(unittest.TestCase):
     def test_apply_change_updates_nested_path(self):
         config = {'features': {'travel_distance': False}}
         changed = apply_change(config, ConfigChange(target='features.travel_distance', value=True))
@@ -33,6 +33,7 @@ class AutoMLFrameworkTests(unittest.TestCase):
             proposal = ExperimentGenerator().propose({'features': {}}, None, hypotheses, mutation_space, registry)
             self.assertEqual(proposal.hypothesis_id, 'high')
             self.assertTrue(proposal.config['features']['high'])
+            self.assertEqual(proposal.config['id'], proposal.id)
 
     def test_registry_tracks_best_metric_and_attempts(self):
         with tempfile.TemporaryDirectory() as tmp_dir:

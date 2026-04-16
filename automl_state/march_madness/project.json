@@ -16,9 +16,13 @@
     "eval_seasons": 10
   },
   "paths": {
-    "framework_state": "automl_state/march_madness"
+    "repo_root": "/home/runner/work/march_machine_learning_mania/march_machine_learning_mania",
+    "legacy_runner": "/home/runner/work/march_machine_learning_mania/march_machine_learning_mania/notebooks/run_experiment.py",
+    "legacy_registry": "/home/runner/work/march_machine_learning_mania/march_machine_learning_mania/experiments/registry.json",
+    "framework_state": "/home/runner/work/march_machine_learning_mania/march_machine_learning_mania/automl_state/march_madness"
   },
   "metadata": {
-    "adapter": "march_madness"
+    "adapter": "march_madness",
+    "legacy_best_config": "experiments/exp_056_gender_hc_consist/config.json"
   }
 }

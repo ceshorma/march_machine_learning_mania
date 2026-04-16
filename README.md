@@ -100,7 +100,7 @@ También se integraron fuentes externas para enriquecer features, por ejemplo:
 - multisource files
 - coach / poll / shooting / resume features
 
-**Importante:** el runner actual espera datos externos en una ruta local definida en código (`EXT_DIR` en `notebooks/run_experiment.py`). Si quieres reproducir los experimentos en otra máquina, debes adaptar esa ruta a tu entorno.
+**Importante:** el runner actual espera datos externos en una ruta local definida en código (`EXT_DIR` en `notebooks/run_experiment.py`). El valor actual es `C:/Users/Admin/Desktop/march_data_temp/`. Si quieres reproducir los experimentos en otra máquina, debes cambiar esa constante por la ruta donde tengas tus carpetas `kenpom/`, `barttorvik/` y `multisource/`.
 
 ## Dependencias
 
